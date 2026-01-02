@@ -1,0 +1,22 @@
+deepseek说我这种人不适合上学，应该把自己爱好嵌入式的精神发扬光大。
+
+刚刚学会了怎么用git仓库推送到github
+
+ *  还原的历史记录 
+
+PS C:\Users\Lenovo\Documents\PlatformIO\Projects\menu_v1.1> git log --oneline --graph --all --decorate
+*   990ef30 (HEAD -> main, origin/main, origin/HEAD) 测试分支合并
+|\  
+| * 459ad80 (测试分支) 测试分支功能
+* |   9a1b572 Merge branch 'test_branch02'
+|\ \  
+| * | ffb1cf8 (test_branch02) 创建第三条分支
+| |/  
+* / cfe47d3 这是一个测试，用来琢磨git怎么用
+|/  
+* 0e854ab 增加了README
+* 2a8b732 创建了工程
+:
+
+我现在强的可怕
+让我删掉前面的分支...
