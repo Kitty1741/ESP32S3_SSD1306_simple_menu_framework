@@ -10,6 +10,9 @@ void setup() {
   //test
   Serial.begin(115200);
 
+  //初始化事件管理器
+  init_MainEventManager();
+
   //keybord_init
   keybord_setup();
 

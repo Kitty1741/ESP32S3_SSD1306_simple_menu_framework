@@ -132,8 +132,8 @@ void u8g2_print_menu( menu *MENU ){
         u8g2.drawUTF8(4 ,18+12*i , MENU->list[ i + view_line ].name );//打印选项名字
       }
     } 
-    
-    u8g2.drawBox( 0 , ( MENU->cursor - view_line )*12 +17 , u8g2.getStrWidth( MENU->list[ MENU->cursor ].name) +6 , 12 ); //打印光标
+                                                                    /*根据长度打印光标*/
+    u8g2.drawBox( 4 , ( MENU->cursor - view_line )*12 +17 , u8g2.getStrWidth( MENU->list[ MENU->cursor ].name) +6 , 12 ); //打印光标
     u8g2.drawBox( 126 , ( MENU->cursor / 1.0 / MENU->length )*47+17 , 2 , 8 ); //打印位置指示器
 
     return;

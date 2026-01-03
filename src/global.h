@@ -65,7 +65,7 @@ typedef struct image_t{
 
 //可能出现的信息类型
 typedef union{
-    char* str[64];//字符串指针，对应信息,菜单,文字类型
+    char* str[64];//字符串指针列表，对应信息,菜单,文字类型
     menu* menu_data;//菜单，对应菜单类型
     image* img;//图片，对应图片类型
 }display_data;
@@ -96,6 +96,9 @@ typedef struct menu_event_t{
     
 }menu_event;
 
+//全局时间管理器声明
 extern menu_event MainEventManager;
+//初始化事件管理器
+void init_MainEventManager();
 
 #endif

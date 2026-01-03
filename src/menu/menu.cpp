@@ -22,12 +22,11 @@
     参数：
         MENU
         类型：menu*
-        作用：告诉函数菜单的长度，用来设置光标
+        作用：告诉函数菜单的长度和用来设置谁的光标
 *///
 bool set_cursor( menu *MENU ){
 
   static int key;
-  key = KEY_NULL;
 
   //检测按键是否松开
   if( MainEventManager.keybord_status->key_enum != KEY_NULL ){//如果没有松开
@@ -53,7 +52,7 @@ bool set_cursor( menu *MENU ){
         MENU->cursor = 0;
         return true;
       }break;
-    }
+    }key = KEY_NULL;
   }
   return false;
 }
