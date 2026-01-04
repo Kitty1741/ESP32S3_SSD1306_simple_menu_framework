@@ -1,17 +1,15 @@
 #ifndef __GLOBAL_H__
 #define __GLOBAL_H__
 
-//menu.h
-typedef struct option_t option;
-typedef struct menu_t menu;
-typedef struct list_t list;
-#include <keybord/keybord.h>
 #include <setting.h>
 
 //这个头文件定义了各种用于模块信息交换的数据类型
 //使用本菜单时请先看看
 
-
+//menu.h
+typedef struct option_t option;
+typedef struct menu_t menu;
+typedef struct list_t list;
 
 
 /*键盘*/
@@ -90,16 +88,24 @@ typedef struct display_info_t{
 
 
 
-
-
 //这里定义了一个用于数据交换的结构
 //不同功能只能以此为接口进行最低耦合的开发
 typedef struct menu_event_t{
 
     menu_keybord *keybord_status;
-    display_info *display;
+    //display_info *display;这个异步打印等以后再开发
     
 }menu_event;
+
+/*extern*/
+
+//u8g2_print_menu.h
+extern void load_display_info(display_info *INFO);
+extern void u8g2_print_display_info( display_info *INFO );
+//keybord.h
+extern uint8_t get_key_value();//松手后得到一次键值，然后销毁键值
+extern uint8_t get_last_key();//返回一次键值
+
 
 //全局时间管理器声明
 extern menu_event MainEventManager;
