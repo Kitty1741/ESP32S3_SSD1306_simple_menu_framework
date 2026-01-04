@@ -51,11 +51,11 @@ extern menu MAIN_MENU;
 void task_loop( bool (*function)(void*) , void* param );
 bool do_nothing( void* do_nothing );
 void menu_init_u8g2();
+bool set_menu_cursor( menu *MENU );
+bool set_list_cursor( list *LIST );
 display_info image_to_display_info( char IMAGE[1024] );
 display_info config_menu_display_info(menu *MENU);
 display_info config_list_display_info(list *LIST);
-bool set_menu_cursor( menu *MENU );
-bool set_list_cursor( list *LIST );
 
 //测试test
 void test_loop();

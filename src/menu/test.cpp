@@ -3,7 +3,7 @@
 #include <Wire.h>
 #include <global.h>
 #include <menu/internal.h>
-#include <menu\u8g2_print.h>
+#include <display/u8g2_print.h>
 
 extern menu MAIN_MENU;
 

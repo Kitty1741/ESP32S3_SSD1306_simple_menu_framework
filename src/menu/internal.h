@@ -8,7 +8,7 @@
 #include <Wire.h>
 #include <global.h>
 #include <menu/menu.h>
-#include <menu/u8g2_print.h>
+#include <display/u8g2_print.h>
 
 //extern声明u8g2类
 extern U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2;

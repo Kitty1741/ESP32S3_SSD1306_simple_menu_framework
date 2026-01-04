@@ -3,7 +3,7 @@
 #include <Wire.h>
 #include <global.h>
 #include <menu/internal.h>//内部模块
-#include <menu\u8g2_print.h>
+#include <display/u8g2_print.h>
 
 //这里只放打印函数
 
