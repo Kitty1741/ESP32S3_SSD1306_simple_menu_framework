@@ -1,17 +1,14 @@
 #ifndef __MENU_H__
 #define __MENU_H__
 
-#include <U8g2lib.h>
-#include <Wire.h>
-#include <global.h>
+//这个模块包含了对外的函数接口
+//用户应该调用这个模块
 
-//声明u8g2类
-extern U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2;
+//显示类型结构定义
 
-//定义菜单/显示所需要的结构
-
-//函数参数共用体(还没搞)
-
+/*
+菜单 MENU
+*///----------------------------------------------------------
 //菜单选项结构体
 typedef struct option_t{
 
@@ -23,20 +20,39 @@ typedef struct option_t{
 //菜单结构体
 typedef struct menu_t{
 
-    const char *name;//菜单的名字
+    const char *name;//菜单的标题
     int length;//菜单的列表长度
     unsigned char cursor;//菜单的光标位置
     option *list;//菜单对应的列表
 
 }menu;
 
+/*    
+列表 LIST
+*///----------------------------------------------------------
+//列表结构体
+typedef struct list_t{
+
+    const char *name;//列表的标题
+    unsigned char cursor;//列表的光标位置
+    const char *list[64];//菜单对应的列表数组
+
+}list;
+
+
+
+
+
 //声明主菜单，这个loop()要用
 extern menu MAIN_MENU;
 
 //对外声明函数
-void menu_init();
-display_info image_to_display_info( char *IMAGE[1024] );
-bool set_cursor( menu *MENU );
+void menu_init_u8g2();
+display_info image_to_display_info( char IMAGE[1024] );
+bool set_menu_cursor( menu *MENU );
+bool set_list_cursor( list *LIST );
+void do_nothing();
+
 //测试test
 void test_loop();
 

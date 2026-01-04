@@ -16,7 +16,7 @@ void init_MainEventManager(){
     MainEventManager.keybord_status->key_value = 0;
     MainEventManager.keybord_status->press_time = 0;
 
-    MainEventManager.display->data.menu_data = NULL;
+    MainEventManager.display->data.menu_t = NULL;
     MainEventManager.display->mode = DISPLAY_MODE_NONE;
     MainEventManager.display->next = NULL;
     MainEventManager.display->x = 0;

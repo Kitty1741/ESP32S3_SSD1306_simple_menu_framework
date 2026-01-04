@@ -17,7 +17,7 @@ void setup() {
   keybord_setup();
 
   //menu_init
-  menu_init();
+  menu_init_u8g2();
 }
 
 void loop() {

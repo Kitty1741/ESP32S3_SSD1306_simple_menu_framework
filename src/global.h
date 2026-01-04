@@ -4,6 +4,7 @@
 //menu.h
 typedef struct option_t option;
 typedef struct menu_t menu;
+typedef struct list_t list;
 #include <keybord/keybord.h>
 
 //这个头文件定义了各种用于模块信息交换的数据类型
@@ -40,13 +41,8 @@ typedef struct menu_keybord_t{
 
 /*显示*/
 /*
-这个菜单的一大特性就是：
-只有显示模块才能用u8g2
-把信息显示在屏幕上
-其他的模块只能以特定格式
-给显示模块信息
-最大化降低耦合
-输出格式标准规范
+这里的几种结构告诉显示器输出什么
+
 */
 //固定的几种屏幕输出模式
 typedef enum{
@@ -65,16 +61,17 @@ typedef struct image_t{
 
 //可能出现的信息类型
 typedef union{
-    char* str[64];//字符串指针列表，对应信息,菜单,文字类型
-    menu* menu_data;//菜单，对应菜单类型
-    image* img;//图片，对应图片类型
+    char* str[64];//字符串指针列表信息,文字类型
+    menu* menu_t;//菜单类型
+    image* img;//图片类型
+    list* list_t;//列表类型
 }display_data;
 
 //用来传值打印内容的结构
 typedef struct display_info_t{
 
     PRINT_MODE mode;//输出内容的类型
-    display_data data;//内含一个和类型对应的数据的指针
+    display_data data;//内含一个和类型对应的结构的指针(内含信息)
     unsigned char x;//在屏幕上的坐标
     unsigned char y;//（只对一部分选项生效）
     struct display_info_t *next;//链表结构，方便叠加图层

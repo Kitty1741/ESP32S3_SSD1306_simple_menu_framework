@@ -2,28 +2,29 @@
 #include <U8g2lib.h>
 #include <Wire.h>
 #include <global.h>
-#include <menu\menu.h>
+#include <menu/internal.h>
 
 //这个文件专门用来定义菜单
 
 
 //主菜单选项列表
-static option MAIN_MENU_LIST[] = {
+option MAIN_MENU_LIST[] = {
 
-    {"测试01",setup},
-    {"测试02",setup},
-    {"测试03",setup},
-    {"测试04",setup},
-    {"测试05",setup},
-    {"测试06",setup},
+    {"测试",do_nothing},
+    {"测试00",do_nothing},
+    {"test",do_nothing},
+    {"meow",do_nothing},
+    {"测试05",do_nothing},
+    {"测试06",do_nothing},
 
 };
 //主菜单
 menu MAIN_MENU = {
 
-    /*标题*/"主菜单",
-    /*长度*/sizeof(MAIN_MENU_LIST)/sizeof(MAIN_MENU_LIST[0]),
-    /*光标初始化*/0,
-    /*选项列表*/MAIN_MENU_LIST,
+    /*标题*/.name = "主菜单",
+    /*长度*/.length = sizeof(MAIN_MENU_LIST)/sizeof(MAIN_MENU_LIST[0]),
+    /*选项列表*/.list = MAIN_MENU_LIST,
 
 };
+
+
