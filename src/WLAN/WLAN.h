@@ -1,2 +1,4 @@
-//测试test
-void test_loop();
+#ifndef __WLAN_H__
+#define __WLAN_H__
+
+#endif

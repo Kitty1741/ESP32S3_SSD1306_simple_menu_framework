@@ -1,7 +1,6 @@
 #ifndef __U8G2_PRINT_H__
 #define __U8G2_PRINT_H__
 
-#include <global.h>
 //menu.h
 typedef struct option_t option;
 typedef struct menu_t menu;
