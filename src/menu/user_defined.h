@@ -1,5 +1,6 @@
-#include <menu/internal.h>
-#include <Arduino.h>
+#ifndef __USER_DEFINED_MENU_H__
+#define __USER_DEFINED_MENU_H__
 
+bool test_print_num( void* num_address );
 
-bool test_print_num( uint32_t num );
+#endif

@@ -3,6 +3,7 @@
 #include <Wire.h>
 #include <global.h>
 #include <menu/internal.h>
+#include "user_defined.h"
 
 
 //这个文件用来写用户定义的函数

@@ -21,32 +21,36 @@
 *///
 bool set_menu_cursor( menu *MENU ){
 
-  static uint8_t menu_key;
+    static uint8_t menu_key;
 
-  menu_key = get_last_key();//检测松手键值
-    
-  //根据输入的键值确定光标移动/其他操作
-  switch( menu_key ){
-    case KEY_NULL:break;
-    case KEY_UP_NUM:{//光标上移
-      MENU->cursor != 0 ?
-      MENU->cursor -- : MENU->cursor = MENU->length - 1 ;
-    }break;
-    case KEY_OK_NUM:{//进入光标所指选项
-      task_loop( MENU->menu_list[MENU->cursor].callback , MENU->menu_list[MENU->cursor].param );
-      menu_init_u8g2();//完事还原默认设置
-    }break;
-    case KEY_DOWN_NUM:{//光标下移
-      MENU->cursor != MENU->length -1 ?
-      MENU->cursor ++ : MENU->cursor = 0 ;
-    }break;
-    case KEY_BACK_NUM:{//返回
-      MENU->cursor = 0;
-      return true;
-    }break;
-  }menu_key = KEY_NULL;
+    menu_key = get_last_key();//检测松手键值
 
-  return false;
+    //根据输入的键值确定光标移动/其他操作
+    switch( menu_key ){
+        case KEY_NULL:break;
+        case KEY_UP_NUM:{//光标上移
+            MENU->cursor != 0 ?
+            MENU->cursor -- : MENU->cursor = MENU->length - 1 ;
+        }break;
+        case KEY_OK_NUM:{//进入光标所指选项
+            task_loop( 
+                MENU->menu_list[MENU->cursor].callback ,
+                MENU->menu_list[MENU->cursor].param
+            );
+            menu_init_u8g2();//完事还原默认设置
+        }break;
+        case KEY_DOWN_NUM:{//光标下移
+            MENU->cursor != MENU->length -1 ?
+            MENU->cursor ++ : MENU->cursor = 0 ;
+        }break;
+        case KEY_BACK_NUM:{//返回
+            MENU->cursor = 0;
+            return true;
+        }break;
+    }
+    menu_key = KEY_NULL;
+
+    return false;
 }
 
 
@@ -63,29 +67,29 @@ bool set_menu_cursor( menu *MENU ){
 *///
 bool set_list_cursor( list *LIST ){
 
-  static uint8_t list_key;
-  list_key = get_last_key();//检测松手键值
-    
-  //根据输入的键值确定光标移动/其他操作
-  switch( list_key ){
-    case KEY_NULL:break;
-    case KEY_UP_NUM:{//光标上移
-      LIST->cursor != 0 ?
-      LIST->cursor -- : LIST->cursor += 0 ;
-    }break;
-    case KEY_OK_NUM:break;
-    case KEY_DOWN_NUM:{//光标下移
-      LIST->list[ LIST->cursor +3 ] != NULL ?
-      LIST->cursor ++ : LIST->list[ LIST->cursor +4 ] != NULL ?
-      LIST->cursor ++ : LIST->cursor += 0 ;
-    }break;
-    case KEY_BACK_NUM:{//返回
-      LIST->cursor = 0;
-      return true;
-    }break;
-  }list_key = KEY_NULL;
+    static uint8_t list_key;
+    list_key = get_last_key();//检测松手键值
 
-  return false;
+    //根据输入的键值确定光标移动/其他操作
+    switch( list_key ){
+        case KEY_NULL:break;
+        case KEY_UP_NUM:{//光标上移
+            LIST->cursor != 0 ?
+            LIST->cursor -- : LIST->cursor += 0 ;
+        }break;
+        case KEY_OK_NUM:break;
+        case KEY_DOWN_NUM:{//光标下移
+            LIST->list[ LIST->cursor +3 ] != NULL ?
+            LIST->cursor ++ : LIST->list[ LIST->cursor +4 ] != NULL ?
+            LIST->cursor ++ : LIST->cursor += 0 ;
+        }break;
+        case KEY_BACK_NUM:{//返回
+            LIST->cursor = 0;
+            return true;
+        }break;
+    }list_key = KEY_NULL;
+
+    return false;
 }
 
 
@@ -116,8 +120,7 @@ display_info image_to_display_info( char IMAGE[1024] ){
     参数：没有
 *///
 bool do_nothing( void* do_nothing ){
-
-  return true;
+    return true;
 }
 
 /*
@@ -133,13 +136,13 @@ bool do_nothing( void* do_nothing ){
 *///
 display_info config_menu_display_info(menu *MENU){
   
-  display_info INFO;
+    display_info INFO;
 
-  INFO.data.menu_t = MENU;
-  INFO.mode = DISPLAY_MODE_MENU;
-  INFO.next = NULL;
+    INFO.data.menu_t = MENU;
+    INFO.mode = DISPLAY_MODE_MENU;
+    INFO.next = NULL;
 
-  return INFO;
+    return INFO;
 }
 
 
@@ -156,15 +159,15 @@ display_info config_menu_display_info(menu *MENU){
 *///
 display_info config_list_display_info(list *LIST){
   
-  display_info INFO;
+    display_info INFO;
 
-  INFO.data.list_t = LIST;
-  INFO.mode = DISPLAY_MODE_LIST;
-  INFO.next = NULL;
-  INFO.x = 0;
-  INFO.y = 0;
+    INFO.data.list_t = LIST;
+    INFO.mode = DISPLAY_MODE_LIST;
+    INFO.next = NULL;
+    INFO.x = 0;
+    INFO.y = 0;
 
-  return INFO;
+    return INFO;
 }
 
 /*
@@ -182,11 +185,11 @@ display_info config_list_display_info(list *LIST){
 *///
 void task_loop( bool (*function)(void*) , void* param ){
 
-  if (!function) return;//防炸
+    if (!function) return;//防炸
 
-  while(1){
-    if( function(param) == true )
-    break;
-    yield();
-  }
+    while(1){
+        if( function(param) == true )
+        break;
+        yield();
+    }
 }

@@ -1,8 +1,10 @@
 #include <Arduino.h>
-#include <global.h>
-#include <keybord\keybord.h>
-#include <Ticker.h>
 #include <driver/timer.h>
+#include <Ticker.h>
+
+#include <keybord/keybord.h>
+#include <global.h>
+
 
 extern int (* user_scan_once)();//单次扫描，返回键值，通常在user_scan_keybord中被调用一次(没有也行)
 extern void (* user_scan_keybord)();//定时中断调用的扫描函数,直接更改系统键值

@@ -11,7 +11,6 @@ typedef struct option_t option;
 typedef struct menu_t menu;
 typedef struct list_t list;
 
-
 /*键盘*/
 /*
 用一个定时器定时扫描键盘
@@ -70,11 +69,6 @@ typedef union{
     list* list_t;//列表类型
 }display_data;
 
-
-
-
-
-
 //用来传值打印内容的结构
 typedef struct display_info_t{
 
@@ -97,10 +91,11 @@ typedef struct menu_event_t{
     
 }menu_event;
 
+
+
 /*extern*/
 
 //u8g2_print_menu.h
-extern void load_display_info(display_info *INFO);
 extern void u8g2_print_display_info( display_info *INFO );
 //keybord.h
 extern uint8_t get_key_value();//松手后得到一次键值，然后销毁键值
