@@ -2,6 +2,7 @@
 #define __GLOBAL_H__
 
 #include <setting.h>
+#include <Arduino.h>
 
 //这个头文件定义了各种用于模块信息交换的数据类型
 //使用本菜单时请先看看
@@ -87,7 +88,8 @@ typedef struct display_info_t{
 typedef struct menu_event_t{
 
     menu_keybord *keybord_status;
-    //display_info *display;这个异步打印等以后再开发
+    display_info *display;//正在用RTOS开发
+    uint64_t frame;//显示成功算一帧，用来定位动画
     
 }menu_event;
 
@@ -100,7 +102,9 @@ extern void u8g2_print_display_info( display_info *INFO );
 //keybord.h
 extern uint8_t get_key_value();//松手后得到一次键值，然后销毁键值
 extern uint8_t get_last_key();//返回一次键值
-
+//freeRTOS
+extern SemaphoreHandle_t DisplayMutex;//显示互斥锁
+extern SemaphoreHandle_t DisplayUpdateSem;//显示刷新信号
 
 //全局时间管理器声明
 extern menu_event MainEventManager;

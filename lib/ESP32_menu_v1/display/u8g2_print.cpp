@@ -43,12 +43,35 @@ void menu_init_u8g2(){
 }
 
 /*
+    函数名字：set_display_info
+    函数功能：设置打印内容并打印一次
+    返回值：没有
+    参数：
+        INFO
+        类型：display_info*
+        作用：设置打印链表的头
+*///
+void set_display_info( display_info *INFO ){
+
+    static display_info STATIC_INFO;//防止INFO指向临时变量
+    STATIC_INFO = *INFO;
+
+    if( xSemaphoreTake( DisplayMutex, 20 ) == pdTRUE ){//如果互斥锁打开
+        MainEventManager.display = &STATIC_INFO;//更新
+        xSemaphoreGive( DisplayMutex );//开锁
+        xSemaphoreGive( DisplayUpdateSem );//更新显示信号
+    }
+
+}
+
+
+/*
     函数名字：u8g2_print_display_info
     函数功能：打印链表的一个节点
     返回值：没有
     参数：
         INFO
-        类型：display_info
+        类型：display_info*
         作用：传递打印数据
 *///
 inline void u8g2_print_display_info_once(display_info *INFO){

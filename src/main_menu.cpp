@@ -1,22 +1,11 @@
-#include <Arduino.h>
-#include <U8g2lib.h>
-#include <Wire.h>
-#include <global.h>
-#include <menu/internal.h>
+#include <menu_API.h>
 
 //这个文件专门用来定义主菜单
-
 
 //主菜单选项列表
 option MAIN_MENU_LIST[] = {
 
-    {"测试",do_nothing},
-    {"测试00",do_nothing},
-    {"test",do_nothing},
-    {"meow",do_nothing},
-    {"测试05",do_nothing},
-    {"测试06",do_nothing},
-
+    {"WLAN",do_nothing},
 };
 //主菜单
 menu MAIN_MENU = {
@@ -26,5 +15,5 @@ menu MAIN_MENU = {
     /*选项列表*/.menu_list = MAIN_MENU_LIST,
 
 };
-
-
+//对应显示包
+display_info MAIN_MENU_INFO = config_menu_display_info( &MAIN_MENU );

@@ -46,11 +46,11 @@ typedef struct list_t{
 
 //声明主菜单，这个loop()要用
 extern menu MAIN_MENU;
+extern display_info MAIN_MENU_INFO;
 
 //对外声明函数
 void task_loop( bool (*function)(void*) , void* param );
 bool do_nothing( void* do_nothing );
-void menu_init_u8g2();
 bool set_menu_cursor( menu *MENU );
 bool set_list_cursor( list *LIST );
 display_info image_to_display_info( char IMAGE[1024] );

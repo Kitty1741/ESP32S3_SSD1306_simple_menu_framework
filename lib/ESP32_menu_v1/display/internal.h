@@ -3,6 +3,9 @@
 
 #include <global.h>
 
+//通用打印函数
+void u8g2_print_display_info( display_info *INFO );
+
 //具体的打印函数
 void u8g2_print_INFO( display_info *INFO );
 void u8g2_print_LOADING();

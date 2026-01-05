@@ -7,6 +7,9 @@ typedef struct option_t option;
 typedef struct menu_t menu;
 
 //最常用的那个
-void u8g2_print_display_info( display_info *INFO );
+void set_display_info( display_info *INFO );
+
+//初始化函数
+void menu_init_u8g2();
 
 #endif

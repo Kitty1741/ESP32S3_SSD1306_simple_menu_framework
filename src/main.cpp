@@ -2,7 +2,7 @@
 #include <U8g2lib.h>
 #include <Wire.h>
 #include <menu_API.h>
-#include <WLAN/test.h>
+#include <WLAN/WLAN.h>
 
 void setup() {
 
@@ -19,8 +19,8 @@ void setup() {
   menu_init_u8g2();
 }
 
-void loop() {
-
-  test_loop();
-
+void loop(){
+    //主菜单
+    set_menu_cursor( &MAIN_MENU );
+    set_display_info( &MAIN_MENU_INFO );
 }

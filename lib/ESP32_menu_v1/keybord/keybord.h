@@ -1,6 +1,8 @@
 #ifndef __KEYBORD_H__
 #define __KEYBORD_H__
 
+#include <Arduino.h>
+
 //这块别改
 void keybord_setup();//向外部声明初始化函数
 uint8_t get_key_value();//松手后得到一次键值，然后销毁键值
