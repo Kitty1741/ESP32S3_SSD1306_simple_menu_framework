@@ -14,3 +14,4 @@ menu WLAN_MENU = {
     /*长度*/.length = sizeof(WLAN_LIST)/sizeof(WLAN_LIST[0]),
     /*选项列表*/.menu_list = WLAN_LIST,
 };
+display_info WLAN_MENU_INFO = menu_to_display_info( &WLAN_MENU );

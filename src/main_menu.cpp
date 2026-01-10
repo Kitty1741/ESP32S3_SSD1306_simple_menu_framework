@@ -1,50 +1,18 @@
 #include <menu_API.h>
-#include <WLAN/WLAN.h>
+#include "WLAN/WLAN.h"
+#include "test/test.h"
 
 //这个文件专门用来定义主菜单
 
 
-// 13x13 爱心图像数据（高位优先格式）
-static uint8_t heart_data[] = {
-    0x18, 0xC0,0x3D, 0xE0,
-    0x7F, 0xF0,0xFF, 0xF8,
-    0xFF, 0xF8,0xFF, 0xF8,
-    0x7F, 0xF0,0x3F, 0xE0,
-    0x1F, 0xC0,0x0F, 0x80,
-    0x07, 0x00,0x02, 0x00,
-    0x00, 0x00
-};
-//32x16小猫图片
-uint8_t cat1Data[] = // 位序颠倒后的小猫点阵数据
-{
-  0x01, 0xE0, 0x03, 0xC0, 0x03, 0xF0, 0x0F, 0xF0, 
-  0x03, 0xF8, 0x1F, 0xF8, 0x07, 0xBC, 0x3F, 0x7C, 
-  0x07, 0x9E, 0x7C, 0x1C, 0x0F, 0x0F, 0xF8, 0x1E, 
-  0x1F, 0x07, 0xF0, 0x0F, 0x1E, 0x03, 0xC0, 0x07, 
-  0x1C, 0x00, 0x00, 0x03, 0x3C, 0x00, 0x00, 0x03, 
-  0x7C, 0x18, 0x30, 0x03, 0x78, 0x18, 0x30, 0x01, 
-  0xF0, 0x01, 0x00, 0x01, 0xF0, 0x09, 0x10, 0x01, 
-  0xE0, 0x06, 0xE0, 0x01, 0xE0, 0x00, 0x00, 0x00
-};
-image cat1Img = {
-    32,
-    16,
-    cat1Data
-};
-// 创建爱心图像结构
-image heart_image = {
-    .width = 13,
-    .height = 13,
-    .image_data = heart_data
-};
-display_info image_info = image_to_display_info(&heart_image,45,2);
-display_info cat1_info = image_to_display_info(&cat1Img,70,24);
 /*菜单选项格式如下*/
-/*选项名(数组)*///*回调函数*///*传入参数(没有可以不写)*/
+/*
+{  选项名(数组) , 回调函数 , 传入参数(没有可以不写)  }
+*/
 //主菜单选项列表
 option MAIN_MENU_LIST[] = {
-    {"WLAN",run_menu,&WLAN_MENU},
-    {"test",do_nothing},
+    {"WLAN",run_info_data,&WLAN_MENU_INFO},
+    {"test",run_info_data,&TEST_MENU_INFO},
     {"中文测试",do_nothing},
     {"回调函数-菜单测试",run_info_data,NULL},
     {"多行测试",do_nothing},
@@ -56,11 +24,5 @@ menu MAIN_MENU = {
     /*长度*/.length = sizeof(MAIN_MENU_LIST)/sizeof(MAIN_MENU_LIST[0]),
     /*选项列表*/.menu_list = MAIN_MENU_LIST,
 };
-
 //对应显示包
 display_info MAIN_MENU_INFO = menu_to_display_info( &MAIN_MENU );
-
-void test(){
-    link_layer( &MAIN_MENU_INFO , &image_info );
-    link_layer( &MAIN_MENU_INFO , &cat1_info );
-}

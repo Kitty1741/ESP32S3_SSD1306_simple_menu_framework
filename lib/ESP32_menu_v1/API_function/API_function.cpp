@@ -91,7 +91,7 @@ display_info image_to_display_info( image* IMAGE , ... ){
 }
 
 /*
-    函数名字：link_layer
+    函数名字：link_info
     函数功能：把后一个输入的指针追加到A所在的链表中，实现图层叠加
     返回值：没有
     参数：
@@ -102,7 +102,7 @@ display_info image_to_display_info( image* IMAGE , ... ){
         类型：display_info*
         作用：指向需要追加的info的地址
 *///
-void link_layer(display_info* A,display_info* B){
+void link_info(display_info* A,display_info* B){
     
     if( A == NULL || B == NULL )
     return;
@@ -117,4 +117,3 @@ void link_layer(display_info* A,display_info* B){
 
     ptr->next = B;
 }
-

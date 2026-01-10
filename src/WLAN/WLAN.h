@@ -1,8 +1,12 @@
 #ifndef __WLAN_H__
 #define __WLAN_H__
 
+#include <menu_API.h>
+
+//extern
 extern menu WLAN_MENU;
 extern option WLAN_LIST[];
+extern display_info WLAN_MENU_INFO;
 
 //WLAN
 // 定义WiFi信息结构体

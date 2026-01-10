@@ -1,9 +1,6 @@
 #include <Arduino.h>
-#include <U8g2lib.h>
-#include <Wire.h>
 #include <menu_API.h>
 #include <WLAN/WLAN.h>
-#include <WiFi.h>
 
 void setup() {
 
@@ -19,8 +16,8 @@ void setup() {
   //menu_init
   menu_init_u8g2();
 
-  void test();
-  test();
+  //INIT()
+  system_init();
 }
 
 void loop(){

@@ -6,5 +6,6 @@
 #include <menu/menu.h>
 #include <display/u8g2_print.h>
 #include <API_function/API_function.h>
+#include <API_function/init.h>
 
 #endif
