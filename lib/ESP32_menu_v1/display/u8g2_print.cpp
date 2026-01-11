@@ -3,8 +3,8 @@
 #include <Wire.h>
 #include <global.h>
 #include <menu/internal.h>//内部模块
-#include <display/internal.h>//内部模块
-#include <display/u8g2_print.h>
+#include "internal.h"//内部模块
+#include "u8g2_print.h"
 #include "image.h"
 
 //这里只放打印函数
@@ -145,6 +145,7 @@ void u8g2_print_TEXT( display_info *INFO ){
 
 }
 
+
 /*
     函数名字：u8g2_print_LOADING
     函数功能：打印“加载中...”
@@ -153,25 +154,16 @@ void u8g2_print_TEXT( display_info *INFO ){
 *///
 void u8g2_print_LOADING(){
 
-    display_info INFO;
-    display_info LOADING_TEXT;
     image* IMAGE;
+    image* WORD_IMG = &mystery_chinese_word_loading;
+    display_info INFO;
+    display_info WORD;
     static uint16_t frame = 0;
     
-    INFO.mode = DISPLAY_MODE_IMAGE;
-    INFO.x = 76;
-    INFO.y = 20;
-
-    LOADING_TEXT.mode = DISPLAY_MODE_TEXT;
-    LOADING_TEXT.x = 28;
-    LOADING_TEXT.y = 24;
-    
-    char str[14];
-    strcpy(str,"加载中");
-    LOADING_TEXT.data.str[0] = (char*)&str;
-    LOADING_TEXT.data.str[1] = NULL;
-    
-    vTaskDelay(100);
+    INFO.mode = DISPLAY_MODE_IMAGE;  WORD.mode = DISPLAY_MODE_IMAGE; 
+    INFO.x = 76;  INFO.y = 20;       WORD.x = 24;  WORD.y = 20;                    
+                                     WORD.data.img = WORD_IMG;
+    vTaskDelay(66);
 
     switch( frame%3 ){
         case 0:IMAGE=&LOADING_IMAGE_1;break;
@@ -180,11 +172,15 @@ void u8g2_print_LOADING(){
     }frame++;
     rotate_image(IMAGE,1);
     INFO.data.img = IMAGE;
-    
-    u8g2.setFont(u8g2_font_wqy16_t_gb2312);
+
+    //不要引入新字体，吃我内存
     u8g2_print_BMP( &INFO );
-    u8g2_print_TEXT( &LOADING_TEXT );
-    u8g2.setFont(u8g2_font_wqy12_t_gb2312);
+    u8g2_print_BMP( &WORD );
+    
+
+    #if ( ENABLE_ANIM == true )
+    //u8g2_print_MEM_CPU(24,35);
+    #endif
 }
 
 
@@ -253,61 +249,6 @@ void u8g2_print_list( display_info *INFO ){
             /* 打印内容 */INFO->data.list_t->list[ i + list_view_line ]
         );
     }
-}
-
-/*
-    函数名字：u8g2_print_BMP
-    函数功能：打印image_data类型图片，支持简单地叠加处理（是否涂黑背景）
-    返回值：没有
-    参数：
-        INFO
-        类型：display_info*
-        作用：传递要打印的图片信息
-*/
-void u8g2_print_BMP( display_info* INFO ){
-
-    u8g2.setDrawColor(1);
-    
-    image* IMAGE = INFO->data.img;
-    uint8_t bmp_data = 0;
-    uint8_t x_cursor = 0;
-    uint8_t y_cursor = 0;
-    uint8_t draw_x = 0 ;
-    uint8_t draw_y = 0 ;
-    uint8_t bit = 0 ;
-    const uint8_t width =  IMAGE->width;
-    const uint8_t height = IMAGE->height;
-    const uint8_t x = INFO->x;
-    const uint8_t y = INFO->y;
-    const uint8_t bytes_per_line = (width + 7) / 8;//每行包含字节数
-
-    //涂黑背景
-    if( IMAGE->if_black_background ){
-        u8g2.drawBox(INFO->x, INFO->y, 
-            width,
-            height
-        );
-        u8g2.setDrawColor(2);
-        u8g2.drawBox(INFO->x, INFO->y, 
-            width,
-            height
-        );
-    }
-    
-    u8g2.setDrawColor(1);
-
-    for( y_cursor=0;  y_cursor < height      ; y_cursor++ ){
-    for( x_cursor=0;  x_cursor<bytes_per_line; x_cursor++ ){
-    bmp_data = IMAGE->image_data[y_cursor*bytes_per_line +x_cursor];//记录对应数据 
-
-    for(bit=0;bit<8;bit++){//打印记录数据
-        draw_x = x + 8*x_cursor +bit;
-        draw_y = y + y_cursor ;
-        if( draw_x < 128 && draw_y < 64 ){//屏幕边界检查
-        if( 8*x_cursor +bit < width ){//图像边界检查
-        if( bmp_data & ( 0x80 >> bit ) ){
-          u8g2.drawPixel( draw_x , draw_y ); // 在xy位置绘制一个像素.
-    }}}}}}u8g2.setDrawColor(2);
 }
 
 /*

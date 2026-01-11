@@ -1,5 +1,6 @@
 #include <menu_API.h>
 
+#if( ENABLE_ANIM == true )
 
 // 13x13 爱心图像数据（高位优先格式）
 static uint8_t heart_data[] = {
@@ -26,13 +27,24 @@ uint8_t cat1Data[] = // 位序颠倒后的小猫点阵数据
 image cat1Img = {
     32,
     16,
-    cat1Data
+    cat1Data,
+    .if_black_background = true,
 };
 // 创建爱心图像结构
 image heart_image = {
     .width = 13,
     .height = 13,
-    .image_data = heart_data
+    .image_data = heart_data,
+    .if_black_background = true,
 };
 display_info image_info = image_to_display_info(&heart_image,45,2);
 display_info cat1_info = image_to_display_info(&cat1Img,70,24);
+
+void test_image_init(){
+    Serial.println("test");
+    link_info( &MAIN_MENU_INFO , &image_info );
+    link_info( &MAIN_MENU_INFO , &cat1_info );
+}
+INIT(test_image);
+
+#endif

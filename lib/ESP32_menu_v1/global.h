@@ -3,6 +3,7 @@
 
 #include <setting.h>
 #include <Arduino.h>
+#include <API_function/init.h>
 
 //这个头文件定义了各种用于模块信息交换的数据类型
 //使用本菜单时请先看看

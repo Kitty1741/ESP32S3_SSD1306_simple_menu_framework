@@ -219,6 +219,6 @@ void task_loop( bool (*function)(void*) , void* param ){
     while(1){
         if( function(param) == true )
         break;
-        yield();
+        vTaskDelay(0);
     }
 }

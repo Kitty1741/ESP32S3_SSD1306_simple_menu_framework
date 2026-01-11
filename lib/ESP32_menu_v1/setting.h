@@ -26,8 +26,12 @@
 //默认用硬件定时器(3)
 #define use_which_timer 3
 
-
 //创建u8g2对象的SSD1306的IO接口
 //只能选硬件IIC的接口
 #define u8g2_SCL 9
 #define u8g2_SDA 8
+
+//是否启用动画?
+#define ENABLE_ANIM true
+#if( ENABLE_ANIM == true )
+#endif
