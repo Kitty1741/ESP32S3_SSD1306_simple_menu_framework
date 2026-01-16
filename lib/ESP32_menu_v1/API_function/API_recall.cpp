@@ -21,26 +21,14 @@ bool run_info(void* param){
 
     display_info* INFO = (display_info*)param;
 
-        switch( INFO->mode ){
-        case DISPLAY_MODE_NONE   :{}break;// 不显示
-        case DISPLAY_MODE_LOADING:{
-            if(get_last_key() == KEY_BACK_NUM)return true;
-        }break;// 加载中
-        case DISPLAY_MODE_TEXT   :{
-            if(get_last_key() == KEY_BACK_NUM)return true;
-        }break;// 信息显示(简单提示)
+        switch( INFO->mode ){//根据模式选择是否特调参数
         case DISPLAY_MODE_MENU   :{
             if(set_menu_cursor( INFO->data.menu_t ))return true;
         }break;// 菜单显示
         case DISPLAY_MODE_LIST   :{
             if(set_list_cursor( INFO->data.list_t ))return true;
         }break;// 文字列表
-        case DISPLAY_MODE_IMAGE  :{
-            if(get_last_key() == KEY_BACK_NUM)return true;
-        }break;// 图片显示
-        case DISPLAY_MODE_SETTING:{
-            if(get_last_key() == KEY_BACK_NUM)return true;
-        }break;//设置选项显示
+        default:if(get_last_key() == KEY_BACK_NUM)return true;break;
     }
 
     set_display_info( INFO );

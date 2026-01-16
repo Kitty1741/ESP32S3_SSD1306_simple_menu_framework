@@ -7,8 +7,8 @@
 //测试菜单选项列表
 option TEST_MENU_LIST[] = {
     {"测试循环",do_nothing},
-    {"多行测试",do_nothing},
-    {"测试loading",run_info,&loading},
+    {"自定义函数测试",do_nothing},
+    {"测试loading",do_nothing},
 };
 //菜单
 menu TEST_MENU = {

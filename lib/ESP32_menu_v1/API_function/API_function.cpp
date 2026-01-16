@@ -11,7 +11,7 @@
 
 
 /*
-    函数名字：config_menu_display_info
+    函数名字：menu_to_display_info
     函数功能：用来把菜单转化为打印信息
     返回值：
       类型：display_info
@@ -34,7 +34,7 @@ display_info menu_to_display_info(menu *MENU){
 
 
 /*
-    函数名字：config_list_display_info
+    函数名字：list_to_display_info
     函数功能：用来把列表转化为打印信息
     返回值：
       类型：display_info
@@ -69,7 +69,7 @@ display_info list_to_display_info(list *LIST){
         类型：image*
         作用：指向需要打印的图片的地址
         可变参数
-        描述：只能填两个uint8_t类型的数据，用来描述图片的开始渲染坐标
+        描述：只能填两个uint8_t类型的数据，用来描述图片左上角的xy坐标
 *///
 display_info image_to_display_info( image* IMAGE , ... ){
 
@@ -89,6 +89,7 @@ display_info image_to_display_info( image* IMAGE , ... ){
     image_info.data.img = IMAGE;
     return image_info;
 }
+
 
 /*
     函数名字：link_info

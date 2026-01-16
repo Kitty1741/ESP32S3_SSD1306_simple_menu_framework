@@ -20,7 +20,7 @@ TaskHandle_t DisplayTask;//显示任务
         类型：void*
         意义：由freeRTOS调用的回调函数必须要有个void*参数
 *///
-void ManagerDisplay( void* no_param ){
+void DisplayManager( void* no_param ){
 
     while(1){
         //检测到刷新信号就刷新
@@ -41,7 +41,7 @@ void init_MainEventManager(){
     DisplayUpdateSem = xSemaphoreCreateBinary();//这个信号量当二进制信号处理
 
     xTaskCreate(
-        ManagerDisplay,     // 任务函数指针
+        DisplayManager,     // 任务函数指针
         "ManagerDisplay",   // 任务名称（调试用）
         12288,               // 任务栈大小（字节）
         NULL,               // 传递给任务的参数（本例为空）

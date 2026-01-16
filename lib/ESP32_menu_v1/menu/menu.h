@@ -80,3 +80,4 @@ bool set_setting_cursor( setting *SIT );
 bool set_EZ_cursor( setting *SIT );
 
 #endif
+

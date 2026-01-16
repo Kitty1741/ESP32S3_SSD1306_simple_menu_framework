@@ -3,9 +3,8 @@
 
 #include <menu_API.h>
 
+//MENU
 extern option TEST_MENU_LIST[];
 extern menu TEST_MENU;
-extern display_info TEST_MENU_INFO;
-extern display_info loading;
 
 #endif
