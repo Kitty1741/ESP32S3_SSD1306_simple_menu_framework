@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#include "3_display/u8g2_print/u8g2_print_internal.h"
+#include "3_display/1_u8g2_print/u8g2_print_internal.h"
 
 #include "DisplayManager_setting.h"
 #include "DisplayManager_internal.h"

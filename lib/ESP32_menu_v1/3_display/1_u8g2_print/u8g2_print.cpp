@@ -3,7 +3,7 @@
 #include <Wire.h>
 
 #include "2_engine/engine.h"
-#include "3_display/image_src/internal_image.h"
+#include "3_display/0_image_src/internal_image.h"
 
 #include "u8g2_print_setting.h"
 #include "u8g2_print_struct.h"
