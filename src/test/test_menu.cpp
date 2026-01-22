@@ -21,4 +21,4 @@ menu TEST_MENU = {
     /*选项列表*/.menu_list = TEST_MENU_LIST,
 };
 //对应显示包
-display_info TEST_MENU_INFO = menu_to_display_info( &TEST_MENU );
+display_info TEST_MENU_INFO = to_display_info( &TEST_MENU );

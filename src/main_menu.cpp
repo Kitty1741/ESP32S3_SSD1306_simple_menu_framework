@@ -25,4 +25,4 @@ menu MAIN_MENU = {
     /*选项列表*/.menu_list = MAIN_MENU_LIST,
 };
 //对应显示包
-display_info MAIN_MENU_INFO = menu_to_display_info( &MAIN_MENU );
+display_info MAIN_MENU_INFO = to_display_info( &MAIN_MENU );

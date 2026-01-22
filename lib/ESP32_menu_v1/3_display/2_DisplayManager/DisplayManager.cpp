@@ -16,14 +16,14 @@ TaskHandle_t DisplayTask;//显示任务
 
 /*
     函数名字：set_display_info
-    函数功能：设置打印内容并打印一次
+    函数功能：设置打印内容
     返回值：没有
     参数：
         INFO
         类型：display_info*
         作用：设置打印链表的头
 *///
-void set_display_info( display_info *INFO ){
+void display_set( display_info *INFO ){
 
     #if( IF_DEBUG_3 ==true )//debug
     Serial.println("set_display_info()");
@@ -34,6 +34,19 @@ void set_display_info( display_info *INFO ){
 
     if( xSemaphoreTake( DisplayMutex, 20 ) == pdTRUE ){//如果互斥锁打开
         PRINT_INFO = STATIC_INFO;//更新
+        xSemaphoreGive( DisplayMutex );//开锁
+    }
+}
+
+/*
+    函数名字：display_refresh
+    函数功能：打印一次打印内容
+    返回值：没有
+    参数：没有
+*///
+void display_refresh(){
+
+    if( xSemaphoreTake( DisplayMutex, 20 ) == pdTRUE ){//如果互斥锁打开
         xSemaphoreGive( DisplayMutex );//开锁
         xSemaphoreGive( DisplayUpdateSem );//更新显示信号
     }

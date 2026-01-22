@@ -34,8 +34,10 @@ void task_loop( bool (*function)(void*) , void* param ){
 }
 
 
+
+
 /*
-    函数名字：set_cursor
+    函数名字：set_menu_cursor
     函数功能：根据接口里的键值，设置菜单光标
     返回值：
         类型：bool

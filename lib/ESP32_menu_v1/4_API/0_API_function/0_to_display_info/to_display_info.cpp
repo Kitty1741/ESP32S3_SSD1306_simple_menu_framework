@@ -1,9 +1,50 @@
 #include <Arduino.h>
 
-#include "API_function.h"
+#include "to_display_info_private.h"
+#include "to_display_info.h"
 
 //本文件用于存放API提供的常用函数
 //最有用包装最深的功能都在这了
+
+
+/*
+    函数名字：to_display_info（重载4）
+    函数功能：用来把低级结构转化为打印信息
+    返回值：
+      类型：display_info
+      意义：包含一个菜单的打印信息
+    参数：
+      MENU
+      类型：menu*
+      作用：提供要配置的菜单的指针
+    或者
+      LIST
+      类型：list*
+      作用：提供要配置的列表的指针
+    或者
+      IMAGE
+      类型：image*
+      作用：指向需要打印的图片的地址,从屏幕左上角开始打印
+    或者
+      IMAGE
+      类型：image*
+      作用：指向需要打印的图片的地址
+      x
+      类型：uint8_t
+      作用：表示打印图片左上角的坐标
+      y
+      类型：uint8_t
+      作用：表示打印图片左上角的坐标
+      
+*///
+display_info to_display_info(menu *MENU)
+{return menu_to_display_info(MENU);}
+display_info to_display_info(list *LIST)
+{return list_to_display_info(LIST);}
+display_info to_display_info( image* IMAGE )
+{return image_to_display_info(IMAGE,0,0);}
+display_info to_display_info( image* IMAGE , uint8_t x , uint8_t y)
+{return image_to_display_info(IMAGE,x,y);}
 
 /*
     函数名字：menu_to_display_info
@@ -63,17 +104,15 @@ display_info list_to_display_info(list *LIST){
         IMAGE
         类型：image*
         作用：指向需要打印的图片的地址
-        可变参数
-        描述：只能填两个uint8_t类型的数据，用来描述图片左上角的xy坐标
-*///
-display_info image_to_display_info( image* IMAGE , ... ){
+        x
+        类型：uint8_t
+        作用：表示打印图片左上角的坐标
+        y
+        类型：uint8_t
+        作用：表示打印图片左上角的坐标
 
-    // 处理可变参数
-    va_list args;
-    va_start(args, IMAGE); // 初始化可变参数列表
-    int x = va_arg(args, int);// 获取第一个参数（x坐标）
-    int y = va_arg(args, int);// 获取第二个参数（y坐标）
-    va_end(args); // 清理可变参数列表
+*///
+display_info image_to_display_info( image* IMAGE , uint8_t x , uint8_t y ){
     
     // 设置坐标
     display_info image_info;

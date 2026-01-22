@@ -19,19 +19,21 @@
 bool run_info(void* param){
 
     display_info* INFO = (display_info*)param;
+    bool return_value = false;
 
         switch( INFO->mode ){//根据模式选择是否特调参数
         case DISPLAY_MODE_MENU   :{
-            if(set_menu_cursor( INFO->data.menu_t ))return true;
+            return_value = set_cursor( INFO->data.menu_t );
         }break;// 菜单显示
         case DISPLAY_MODE_LIST   :{
-            if(set_list_cursor( INFO->data.list_t ))return true;
+            return_value = set_cursor( INFO->data.list_t );
         }break;// 文字列表
         default:if(get_last_key() == KEY_BACK_NUM)return true;break;
     }
 
-    set_display_info( INFO );
-    return false;
+    display_set( INFO );
+    display_refresh();
+    return return_value;
 }
 
 /*
@@ -52,8 +54,9 @@ bool run_menu(void* param){
     MENU = (menu*)param;
     
     if(set_menu_cursor( MENU ))return true;
-    MENU_INFO = menu_to_display_info( MENU );
-    set_display_info( &MENU_INFO );
+    MENU_INFO = to_display_info( MENU );
+    display_set( &MENU_INFO );
+    display_refresh();
     return false;
 }
 
@@ -75,8 +78,9 @@ bool run_list(void* param){
     LIST = (list*)param;
     
     if(set_list_cursor( LIST ))return true;
-    LIST_INFO = list_to_display_info( LIST );
-    set_display_info( &LIST_INFO );
+    LIST_INFO = to_display_info( LIST );
+    display_set( &LIST_INFO );
+    display_refresh();
     return false;
 }
 

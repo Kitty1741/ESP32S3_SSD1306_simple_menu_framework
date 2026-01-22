@@ -7,7 +7,6 @@
 //这个模块包含了菜单列表对外的函数接口
 
 //对外声明函数
-void task_loop( bool (*function)(void*) , void* param );
 bool set_menu_cursor( menu *MENU );
 
 #endif
