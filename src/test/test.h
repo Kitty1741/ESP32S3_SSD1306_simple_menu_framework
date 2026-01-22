@@ -5,6 +5,6 @@
 
 //MENU
 extern option TEST_MENU_LIST[];
-extern menu TEST_MENU;
+extern display_info TEST_MENU_INFO;
 
 #endif

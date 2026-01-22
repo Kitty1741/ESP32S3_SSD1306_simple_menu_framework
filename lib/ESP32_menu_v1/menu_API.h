@@ -1,11 +1,13 @@
 #ifndef __MENU_API_H__
 #define __MENU_API_H__
 
-#include <keybord/keybord.h>
-#include <global.h>
-#include <menu/menu.h>
-#include <display/u8g2_print.h>
-#include <API_function/API_function.h>
-#include <API_function/init.h>
+//对外接口
+
+//里面有所有涉及的结构
+#include "4_API/API_struct.h"
+
+//里面有所有涉及的对外函数
+#include "4_API/API.h"
+
 
 #endif

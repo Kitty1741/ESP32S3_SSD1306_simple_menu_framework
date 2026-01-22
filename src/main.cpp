@@ -2,22 +2,12 @@
 #include <menu_API.h>
 #include <WLAN/WLAN.h>
 
+extern display_info MAIN_MENU_INFO;
+
 void setup() {
 
-  //test
-  Serial.begin(115200);
-
-  //初始化事件管理器
-  init_MainEventManager();
-
-  //keybord_init
-  keybord_setup();
-
-  //menu_init
-  menu_init_u8g2();
-
-  //INIT()
-  system_init();
+    //menu_API
+    menu_API_init();
 }
 
 void loop(){

@@ -1,0 +1,20 @@
+#ifndef __CONFIG_H___
+#define __CONFIG_H___
+
+//是否开启调试模式(串口发送调试信息)(true/false)
+#define IF_DEBUG true
+#if( IF_DEBUG == true )
+
+#define IF_DEBUG_0 true//允许调试不同层?
+#define IF_DEBUG_1 true
+#define IF_DEBUG_2 true
+#define IF_DEBUG_3 true
+#define IF_DEBUG_4 true
+
+#endif
+
+//该层初始化清单
+#define INIT_LIST_0 \
+    ;
+
+#endif
