@@ -1,5 +1,5 @@
-#ifndef __KEYBORD_SETTING_H__
-#define __KEYBORD_SETTING_H__
+#ifndef __KEYBOARD_SETTING_H__
+#define __KEYBOARD_SETTING_H__
 
 #include "0_config/config.h"
 

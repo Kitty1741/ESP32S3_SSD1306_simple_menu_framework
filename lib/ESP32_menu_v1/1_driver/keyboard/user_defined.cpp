@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
-#include "keybord.h"
-#include "keybord_struct.h"
+#include "keyboard.h"
+#include "keyboard_struct.h"
 #include "user_defined.h"
 
 //用户自定义扫描函数
@@ -14,11 +14,11 @@ int (* user_scan_once)() = default_scan_once_function;
 
 //把你自己的完整键盘 扫描-传值 函数放在这里  |
 //这里的函数会定时被timer中断执行           ↓
-void (* user_scan_keybord)() = default_scan_function;
+void (* user_scan_keyboard)() = default_scan_function;
 
 //把你自己的键盘初始化函数放在这|
 //这里的函数会定时被setup()执行 ↓
-void (* user_init_keybord)() = default_init_function;
+void (* user_init_keyboard)() = default_init_function;
 
 
 
@@ -26,7 +26,7 @@ void (* user_init_keybord)() = default_init_function;
 //下面是默认的键盘扫描函数，用户根据自己需求修改
 
 //简单的键盘扫描函数
-//功能：在中断中扫描键盘然后赋值给MainEventManager.keybord_status
+//功能：在中断中扫描键盘然后赋值给MainEventManager.keyboard_status
 void default_scan_function(){
     static int key_value;//防止频繁入栈出栈影响性能
     static int press_time;
@@ -38,9 +38,9 @@ void default_scan_function(){
     press_time += 20 ;
 
     //直接把数据打入公共结构
-    keybord_status.key_enum = key_value;
-    keybord_status.key_value = key_value;
-    keybord_status.press_time = press_time;
+    keyboard_status.key_enum = key_value;
+    keyboard_status.key_value = key_value;
+    keyboard_status.press_time = press_time;
 
     return;
 }

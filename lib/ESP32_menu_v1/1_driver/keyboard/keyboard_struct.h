@@ -1,15 +1,15 @@
-#ifndef __KEYBORD_STRUCT_H__
-#define __KEYBORD_STRUCT_H__
+#ifndef __KEYBOARD_STRUCT_H__
+#define __KEYBOARD_STRUCT_H__
 
 #include <Arduino.h>
 
 //设置
-#include "keybord_setting.h"
+#include "keyboard_setting.h"
 
 /*  键盘  */
 /*
 键盘定时自动扫描,键值存储在全局变量中
-keybord里面的函数可以读取全局变量的键值
+keyboard里面的函数可以读取全局变量的键值
 */
 
 
@@ -25,15 +25,15 @@ typedef enum KEY_VALUE_t{
 }KEY_VALUE;
 
 //按键信息结构体
-typedef struct menu_keybord_t{
+typedef struct menu_keyboard_t{
 
     uint8_t key_enum;
     uint8_t key_value;
     uint8_t press_time;
 
-}menu_keybord;
+}menu_keyboard;
 
 //声明
-extern menu_keybord keybord_status;
+extern menu_keyboard keyboard_status;
 
 #endif
