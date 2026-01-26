@@ -163,23 +163,30 @@ void u8g2_print_LOADING(){
     
     //设置显示文字  
     WORD.mode = DISPLAY_MODE_IMAGE; 
-    WORD.x = 40;  WORD.y = 23;             
-    WORD.data.img = WORD_IMG;         
+    WORD.x = 41;  WORD.y = 23;
+    WORD.data.img = WORD_IMG;
     u8g2_print_BMP( &WORD );//不要引入新字体，吃我内存
     
     //显示动画
-    vTaskDelay( 50 );
-    frame++;
-    #if ( ENABLE_ANIM == true )
-      float_t x1 = sin( frame * 0.2 );
-      float_t x2 = sin( frame * 0.2 + 1.57 );
+    vTaskDelay( 20 );
+    frame < 0xffff ? frame++ : frame = 0;
+    #if ( ENABLE_ANIM == true )//动画显示
+      float_t x1,x2;
+      if( frame % 30 < 15 ){
+        x2 = 88 + 48 * sin( frame % 15 * PI/2/15 + 1.5*PI );
+        x1 = 40;
+      }
+      else{
+        x1 = 40 + 48 * sin( frame % 15 * PI/2/15 );
+        x2 = 88;
+      }
       if( x2 > x1 )
       u8g2.drawLine(x1, 40, x2, 40);
-    #elif
-      char c = '|';
-      switch(frame % 4){
-        case 0:c='|';break;case 1:c='/';break;
-        case 2:c='-';break;case 3:c='\\';break;
+    #elif ( ENABLE_ANIM == false )//非动画显示
+      char c[2] = "|";
+      switch(frame / 5 % 4){
+        case 0:c[0]='|';break;case 1:c[0]='/';break;
+        case 2:c[0]='-';break;case 3:c[0]='\\';break;
       }u8g2.drawStr(90, 26, c);
     #endif
 }
