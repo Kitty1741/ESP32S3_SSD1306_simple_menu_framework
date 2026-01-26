@@ -33,7 +33,4 @@ typedef struct menu_keyboard_t{
 
 }menu_keyboard;
 
-//声明
-extern menu_keyboard keyboard_status;
-
 #endif

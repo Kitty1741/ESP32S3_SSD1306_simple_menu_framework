@@ -21,7 +21,8 @@ void (* user_scan_keyboard)() = default_scan_function;
 void (* user_init_keyboard)() = default_init_function;
 
 
-
+//存储扫描结果的结构体
+menu_keyboard keyboard_status;
 
 //下面是默认的键盘扫描函数，用户根据自己需求修改
 

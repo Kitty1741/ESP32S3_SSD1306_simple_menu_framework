@@ -4,7 +4,9 @@
 #include "keyboard.h"
 #include "keyboard_struct.h"
 
-menu_keyboard keyboard_status;
+
+//声明扫描结构体
+extern menu_keyboard keyboard_status;
 
 extern int (* user_scan_once)();//单次扫描，返回键值，通常在user_scan_keyboard中被调用一次(没有也行)
 extern void (* user_scan_keyboard)();//定时中断调用的扫描函数,直接更改系统键值

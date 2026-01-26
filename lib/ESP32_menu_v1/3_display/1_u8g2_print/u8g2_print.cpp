@@ -146,7 +146,7 @@ void u8g2_print_TEXT( display_info *INFO ){
 
 /*
     函数名字：u8g2_print_LOADING
-    函数功能：打印“加载中...”
+    函数功能：打印加载界面
     返回值：没有
     参数：没有
 *///
@@ -156,33 +156,31 @@ void u8g2_print_LOADING(){
     Serial.println("u8g2_print_LOADING()");
     #endif
 
-    image* IMAGE;
+    //初始化
+    static uint32_t frame = 0;
     image* WORD_IMG = &mystery_chinese_word_loading;
-    display_info INFO;
     display_info WORD;
-    static uint16_t frame = 0;
     
-    //设置显示文字                     //设置显示图像
-    WORD.mode = DISPLAY_MODE_IMAGE;   INFO.mode = DISPLAY_MODE_IMAGE; 
-    WORD.x = 24;  WORD.y = 20;        INFO.x = 76;  INFO.y = 20;              
+    //设置显示文字  
+    WORD.mode = DISPLAY_MODE_IMAGE; 
+    WORD.x = 40;  WORD.y = 23;             
     WORD.data.img = WORD_IMG;         
-    vTaskDelay(66);
-
-    switch( frame%3 ){
-        case 0:IMAGE=&LOADING_IMAGE_1;break;
-        case 1:IMAGE=&LOADING_IMAGE_2;break;
-        case 2:IMAGE=&LOADING_IMAGE_3;break;
-    }frame++;
-    rotate_image(IMAGE,1);
-    INFO.data.img = IMAGE;
-
-    //不要引入新字体，吃我内存
-    u8g2_print_BMP( &INFO );
-    u8g2_print_BMP( &WORD );
+    u8g2_print_BMP( &WORD );//不要引入新字体，吃我内存
     
-
+    //显示动画
+    vTaskDelay( 50 );
+    frame++;
     #if ( ENABLE_ANIM == true )
-    //u8g2_print_MEM_CPU(24,35);
+      float_t x1 = sin( frame * 0.2 );
+      float_t x2 = sin( frame * 0.2 + 1.57 );
+      if( x2 > x1 )
+      u8g2.drawLine(x1, 40, x2, 40);
+    #elif
+      char c = '|';
+      switch(frame % 4){
+        case 0:c='|';break;case 1:c='/';break;
+        case 2:c='-';break;case 3:c='\\';break;
+      }u8g2.drawStr(90, 26, c);
     #endif
 }
 
