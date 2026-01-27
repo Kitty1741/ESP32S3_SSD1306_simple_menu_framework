@@ -8,7 +8,7 @@ typedef enum setting_mode_t{
 
     SETTING_MODE_CHAR,
     SETTING_MODE_INT,
-    SETTING_MODE_FLOAT,
+    SETTING_MODE_DOUBLE,
 
 }setting_mode;
 
@@ -18,8 +18,8 @@ typedef struct setting_t{
     const char* name;        //界面标题
     const setting_mode MODE; //设置变量的类型
     void* object;            //设置的对象指针
-    float_t min;             //最小值
-    float_t max;             //最大值
+    double_t min;             //最小值
+    double_t max;             //最大值
 
 }setting;
 

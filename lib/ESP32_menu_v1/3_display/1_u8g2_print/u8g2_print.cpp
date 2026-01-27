@@ -2,6 +2,7 @@
 #include <U8g2lib.h>
 #include <Wire.h>
 
+#include "2_engine/engine_struct.h"
 #include "2_engine/engine.h"
 #include "3_display/0_image_src/internal_image.h"
 
@@ -53,6 +54,22 @@ void u8g2_print_init(){
 
 }
 
+/*
+    函数名字：u8g2_print_title
+    函数功能：打印title
+    返回值：没有
+    参数：
+        name
+        类型：const char*
+        作用：传递打印数据
+*///
+inline void u8g2_print_title( const char* title ){
+
+    //显示到U8G2
+    u8g2.drawUTF8(3 ,4 , title );//画菜单名字
+    u8g2.drawFrame(0, 1, 128, 16); //画空心矩形
+}
+
 
 /*
     函数名字：u8g2_print_display_info
@@ -70,7 +87,7 @@ inline void u8g2_print_display_info_once(display_info *INFO){
     #endif
 
     switch( INFO->mode ){
-        case DISPLAY_MODE_NONE   :{}break;// 不显示
+        case DISPLAY_MODE_NONE   :break;// 不显示
         case DISPLAY_MODE_LOADING:{
             u8g2_print_LOADING();
         }break;// 加载中
@@ -86,6 +103,9 @@ inline void u8g2_print_display_info_once(display_info *INFO){
         case DISPLAY_MODE_IMAGE  :{
             u8g2_print_BMP( INFO );
         }break;// 图片显示
+        case DISPLAY_MODE_SETTING:{
+            u8g2_print_setting( INFO->data.setting_t );
+        }break;// 设置界面显示
     }
 }
 
@@ -96,7 +116,7 @@ inline void u8g2_print_display_info_once(display_info *INFO){
     参数：
         INFO
         类型：display_info*
-        作用：作为一个含有打印信息的链表的头传递数据
+        作用：告诉函数打印链表的起点
 *///
 void u8g2_print_display_info( display_info *INFO ){
 
@@ -222,8 +242,7 @@ void u8g2_print_menu( menu *MENU ){
     }
 
     //显示到U8G2
-    u8g2.drawUTF8(3 ,4 , MENU->name );//画菜单名字
-    u8g2.drawFrame(0, 1, 128, 16); //画空心矩形
+    u8g2_print_title( MENU->name );
 
     for(int i=0; i<4; i++){
       if( i < MENU->length ){
@@ -321,4 +340,39 @@ void u8g2_print_BMP( display_info* INFO ){
         if( bmp_data & ( 0x80 >> bit ) ){
           u8g2.drawPixel( draw_x , draw_y ); // 在xy位置绘制一个像素.
     }}}}}}u8g2.setDrawColor(2);
+}
+
+/*
+    函数名字：u8g2_print_setting
+    函数功能：打印设置界面
+    返回值：没有
+    参数：
+        SIT
+        类型：setting*
+        作用：传递要打印的设置参数
+*///
+void u8g2_print_setting( setting* SIT ){
+
+    #if( IF_DEBUG_3 ==true )//debug
+    Serial.println("u8g2_print_setting()");
+    #endif
+
+    char param_ptr[20];
+
+    //打印
+    u8g2_print_title( SIT->name );//打印标题
+    switch( SIT->MODE ){//设置打印内容
+        case SETTING_MODE_DOUBLE:
+            sprintf( param_ptr , "值 -> %.6g", *(double_t*)SIT->object );
+        break;
+        case SETTING_MODE_CHAR:
+            sprintf( param_ptr , "字符 -> %c", *(char*)SIT->object );
+        break;
+        case SETTING_MODE_INT:
+            sprintf( param_ptr , "值 -> %.4g", *(int64_t*)SIT->object );
+        break;
+    }
+    u8g2.drawUTF8( 8 , 24 , param_ptr );//打印内容
+    //u8g2.drawBox( 6 , 22 , 114 , 16 );
+    u8g2.drawUTF8( 6 , 50 , "2/4.确认并退出" );
 }

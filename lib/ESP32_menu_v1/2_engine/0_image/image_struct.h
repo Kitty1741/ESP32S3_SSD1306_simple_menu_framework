@@ -3,12 +3,12 @@
 
 #include <Arduino.h>
 
-//定义图片类型用来存储图片
+//图片结构体
 typedef uint8_t* image_arrow;
 typedef struct image_t{
-    uint8_t width;//图片的宽度
-    uint8_t height;//图片的高度
-    image_arrow image_data;//一维数组指针，指向图片数据
+    uint8_t width;
+    uint8_t height;
+    image_arrow image_data;//图片数据
     bool if_black_background;//选项，背景是否黑色(否则不是)
 }image;
 

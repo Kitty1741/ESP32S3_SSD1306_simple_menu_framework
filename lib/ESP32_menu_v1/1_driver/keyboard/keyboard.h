@@ -11,6 +11,7 @@
 void keyboard_init();//向外部声明初始化函数
 uint8_t get_key_value();//松手后得到一次键值，然后销毁键值
 uint8_t get_last_key();//返回一次键值
+uint8_t get_first_key();//返回一次键值
 uint16_t get_press_time();//得到按下时间
 
 

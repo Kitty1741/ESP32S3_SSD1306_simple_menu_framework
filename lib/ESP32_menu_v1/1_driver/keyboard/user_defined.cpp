@@ -35,7 +35,7 @@ void default_scan_function(){
     //扫描和计时
     key_value = user_scan_once();
     key_value == KEY_NULL ?
-    press_time = KEY_NULL :
+    press_time = 0 :
     press_time += 20 ;
 
     //直接把数据打入公共结构

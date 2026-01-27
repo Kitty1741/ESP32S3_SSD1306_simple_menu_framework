@@ -120,7 +120,26 @@ uint16_t get_press_time(){
     return keyboard_status.press_time;
 }
 
+/*
+    函数名字：get_first_key
+    函数功能：返回一次按下按键的值，但是当按键和上次一样时返回KEY_NULL
+    返回值：
+        类型：uint8_t
+        意义：按键的值
+    参数：没有
+*///
+uint8_t get_first_key(){
 
+    static uint8_t last_key;
+
+    if( last_key == get_key_value() ){
+        return KEY_NULL;
+    }
+    else{
+        last_key = get_key_value();
+        return last_key;
+    }
+}
 
 
 /*
@@ -128,7 +147,7 @@ uint16_t get_press_time(){
     函数功能：检测是否松手并返回最近一次松手时按键的值（多线程用不了），然后销毁这个值
     返回值：
         类型：uint8_t
-        意义：接口里的最近一次松手时按键的值（没松手/没动静都返回0）
+        意义：按键的值
     参数：没有
 *///
 uint8_t get_last_key(){

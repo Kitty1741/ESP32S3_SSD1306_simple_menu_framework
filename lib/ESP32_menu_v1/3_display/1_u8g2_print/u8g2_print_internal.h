@@ -13,5 +13,6 @@ void u8g2_print_menu( menu *MENU );
 void u8g2_print_TEXT( display_info *INFO );
 void u8g2_print_list( display_info *INFO );
 void u8g2_print_BMP(display_info* INFO);
+void u8g2_print_setting( setting* SIT );
 
 #endif

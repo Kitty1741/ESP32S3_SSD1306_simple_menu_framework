@@ -11,5 +11,6 @@
 bool set_cursor( display_info* INFO );
 bool set_cursor( menu* MENU );
 bool set_cursor( list* LIST );
+bool set_cursor( setting* SET );
 
 #endif

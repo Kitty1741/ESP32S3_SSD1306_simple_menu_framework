@@ -6,13 +6,10 @@
 #include "2_engine/engine.h"
 #include "3_display/display.h"
 
-#include "4_API/0_API_function/0_to_display_info/to_display_info.h"
 #include "4_API/0_API_function/0_set_cursor/set_cursor.h"
 
 //recall
 bool run_info(void* param);
-bool run_list(void* param);
-bool run_menu(void* param);
 bool do_nothing( void* do_nothing );
 
 #endif

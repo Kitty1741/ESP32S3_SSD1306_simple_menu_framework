@@ -27,6 +27,7 @@ typedef union{
     menu* menu_t;//菜单类型
     image* img;//图片类型
     list* list_t;//列表类型
+    setting* setting_t;//设置类型
 }display_data;
 
 //用来传值打印内容的结构

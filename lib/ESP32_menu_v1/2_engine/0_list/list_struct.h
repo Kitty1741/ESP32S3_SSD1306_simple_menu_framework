@@ -1,10 +1,8 @@
 #ifndef __LIST_STRUCT_H__
 #define __LIST_STRUCT_H__
 
-/*    
-  列表 LIST
-*///----------------------------------------------------------
 
+//列表结构体
 typedef struct list_t{
 
     const char *name;//列表的标题

@@ -29,7 +29,7 @@ typedef struct menu_keyboard_t{
 
     uint8_t key_enum;
     uint8_t key_value;
-    uint8_t press_time;
+    uint16_t press_time;
 
 }menu_keyboard;
 

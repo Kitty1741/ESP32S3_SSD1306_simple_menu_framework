@@ -3,10 +3,7 @@
 
 #include <Arduino.h>
 
-/*
-  菜单 MENU
-*///----------------------------------------------------------
-//单个选项
+//菜单选项结构体
 typedef struct option_t{
 
     const char* name;          //选项名字

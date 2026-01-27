@@ -8,7 +8,7 @@
 
 
 /*
-    函数名字：to_display_info（重载4）
+    函数名字：to_display_info（重载5）
     函数功能：用来把低级结构转化为打印信息
     返回值：
       类型：display_info
@@ -45,6 +45,8 @@ display_info to_display_info( image* IMAGE )
 {return image_to_display_info(IMAGE,0,0);}
 display_info to_display_info( image* IMAGE , uint8_t x , uint8_t y)
 {return image_to_display_info(IMAGE,x,y);}
+display_info to_display_info(setting *SET)
+{return setting_to_display_info(SET);}
 
 /*
     函数名字：menu_to_display_info
@@ -122,6 +124,29 @@ display_info image_to_display_info( image* IMAGE , uint8_t x , uint8_t y ){
     image_info.mode = DISPLAY_MODE_IMAGE;//图片打印模式
     image_info.data.img = IMAGE;
     return image_info;
+}
+
+
+/*
+    函数名字：setting_to_display_info
+    函数功能：用来把菜单转化为打印信息
+    返回值：
+      类型：display_info
+      意义：包含一个菜单的打印信息
+    参数：
+      SET
+      类型：setting*
+      作用：提供要配置的菜单的指针
+*///
+display_info setting_to_display_info(setting *SET){
+  
+    display_info INFO;
+
+    INFO.data.setting_t = SET;
+    INFO.mode = DISPLAY_MODE_SETTING;
+    INFO.next = NULL;
+
+    return INFO;
 }
 
 

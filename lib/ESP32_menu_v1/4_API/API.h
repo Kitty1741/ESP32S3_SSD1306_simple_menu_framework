@@ -8,7 +8,6 @@
 #include "3_display/display.h"
 
 //对外API
-#include "4_API/0_API_function/0_to_display_info/to_display_info.h"
 #include "4_API/0_API_function/0_set_cursor/set_cursor.h"
 #include "4_API/1_API_recall/API_recall.h"
 #include "4_API/2_API_init/init.h"
