@@ -170,6 +170,7 @@ void u8g2_print_LOADING(){
     //显示动画
     vTaskDelay( 20 );
     frame < 0xffff ? frame++ : frame = 0;
+    
     #if ( ENABLE_ANIM == true )//动画显示
       float_t x1,x2;
       if( frame % 30 < 15 ){

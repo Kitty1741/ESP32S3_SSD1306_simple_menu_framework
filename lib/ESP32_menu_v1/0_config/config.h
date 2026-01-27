@@ -1,6 +1,11 @@
 #ifndef __CONFIG_H___
 #define __CONFIG_H___
 
+//全局设置
+
+//长按时间阈值（ms）
+#define LONG_PRESS_THRESHOLD 500
+
 //是否开启调试模式(串口发送调试信息)(true/false)
 #define IF_DEBUG false
 #if( IF_DEBUG == true )
