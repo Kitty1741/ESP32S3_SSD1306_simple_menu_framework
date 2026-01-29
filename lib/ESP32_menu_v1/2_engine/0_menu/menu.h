@@ -3,6 +3,8 @@
 
 //结构定义
 #include "menu_struct.h"
+//宏定义
+#include "menu_macro.h"
 
 //这个模块包含了菜单列表对外的函数接口
 

@@ -1,4 +1,6 @@
-#include <menu_API.h>
+
+
+#include "menu_API.h"
 
 #include "WLAN/WLAN.h"
 #include "test/test.h"
@@ -10,19 +12,13 @@
 {  选项名(数组) , 回调函数 , 传入参数(没有可以不写)  }
 */
 //主菜单选项列表
-option MAIN_MENU_LIST[] = {
-    {"WLAN",run_info,&WLAN_MENU_INFO},
-    {"test",run_info,&TEST_MENU_INFO},
+CREATE_MENU(main,{
+    {"WLAN",run_info,&WLAN_menu_info},
+    {"test",run_info,&test_menu_info},
     {"中文测试",do_nothing},
     {"回调函数-菜单测试",run_info,NULL},
     {"多行测试",do_nothing},
     {"多行测试",do_nothing},
-};
-//主菜单
-menu MAIN_MENU = {
-    /*标题*/.name = "主菜单",
-    /*长度*/.length = lengthof(MAIN_MENU_LIST),
-    /*选项列表*/.menu_list = MAIN_MENU_LIST,
-};
+})
 //对应显示包
-display_info MAIN_MENU_INFO = to_display_info( &MAIN_MENU );
+display_info main_menu_info = to_display_info( &main_menu );

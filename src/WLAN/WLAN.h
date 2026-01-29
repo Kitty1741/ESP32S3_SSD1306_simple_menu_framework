@@ -4,9 +4,7 @@
 #include <menu_API.h>
 
 //extern
-extern menu WLAN_MENU;
-extern option WLAN_LIST[];
-extern display_info WLAN_MENU_INFO;
+extern display_info WLAN_menu_info;
 
 //WLAN
 // 定义WiFi信息结构体

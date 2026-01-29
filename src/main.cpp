@@ -2,7 +2,7 @@
 #include <menu_API.h>
 #include <WLAN/WLAN.h>
 
-extern display_info MAIN_MENU_INFO;
+extern display_info main_menu_info;
 
 void setup() {
 
@@ -12,5 +12,5 @@ void setup() {
 
 void loop(){
     //主菜单
-    run_info( &MAIN_MENU_INFO );
+    run_info( &main_menu_info );
 }

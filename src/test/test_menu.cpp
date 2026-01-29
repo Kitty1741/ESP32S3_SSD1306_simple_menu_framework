@@ -41,38 +41,26 @@ display_info TEST_SET_DOUBLE_INFO = to_display_info( &TEST_SET_DOUBLE );
 
 
 //测试菜单选项列表
-option TEST_MENU_ENGINE_LIST[] = {
+CREATE_MENU(test_engine,{
     {"设置char"  ,run_info  ,&TEST_SET_CHAR_INFO   },
     {"设置int"   ,run_info  ,&TEST_SET_INT_INFO    },
     {"设置double",run_info  ,&TEST_SET_DOUBLE_INFO },
-};
-menu TEST_MENU_ENGINE = {
-    /*标题*/.name = "设置测试",
-    /*长度*/.length = lengthof(TEST_MENU_ENGINE_LIST),
-    /*选项列表*/.menu_list = TEST_MENU_ENGINE_LIST,
-};
-display_info TEST_MENU_ENGINE_INFO = to_display_info( &TEST_MENU_ENGINE );
+})
+
+display_info test_engine_menu_info = to_display_info( &test_engine_menu );
 
 
 //LOADING
-display_info LOADING_INFO = {
+display_info loading_info = {
     .mode = DISPLAY_MODE_LOADING,
 };
 
 
 //菜单选项列表
-option TEST_MENU_LIST[] = {
-    {"核心功能测试",run_info,&TEST_MENU_ENGINE_INFO},
+CREATE_MENU(test ,{
+    {"核心功能测试",run_info,&test_engine_menu_info},
     {"自定义函数测试",show_time,NULL},
-    {"测试loading",run_info,&LOADING_INFO},
-};
-/*菜单选项格式如下*/
-/*选项名(数组)*///*回调函数*///*传入参数(没有可以不写)*/
-//菜单
-menu TEST_MENU = {
-    /*标题*/.name = "测试菜单",
-    /*长度*/.length = lengthof(TEST_MENU_LIST),
-    /*选项列表*/.menu_list = TEST_MENU_LIST,
-};
+    {"测试loading",run_info,&loading_info},
+})
 //对应显示信息
-display_info TEST_MENU_INFO = to_display_info( &TEST_MENU );
+display_info test_menu_info = to_display_info( &test_menu );

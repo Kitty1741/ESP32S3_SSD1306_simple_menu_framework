@@ -4,7 +4,6 @@
 #include <menu_API.h>
 
 //MENU
-extern option TEST_MENU_LIST[];
-extern display_info TEST_MENU_INFO;
+extern display_info test_menu_info;
 
 #endif
