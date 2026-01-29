@@ -1,7 +1,8 @@
 #ifndef __CONFIG_H___
 #define __CONFIG_H___
 
-#include "0_config/get_time/get_time.h"
+#include "0_config/macro/get_time/get_time.h"
+#include "0_config/macro/lengthof()/lengthof().h"
 
 //全局设置
 

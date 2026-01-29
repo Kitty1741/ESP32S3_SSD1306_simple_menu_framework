@@ -8,6 +8,68 @@
 
 
 /*
+    函数名字：long_press_logic
+    函数功能：处理按键按下改变变量的业务
+    返回值：
+        类型：bool
+        意义：返回是否按下退出,如果是返回true
+    参数：
+        num
+        类型：double_t*
+        作用：告诉函数设置哪个值
+        min
+        类型：double_t
+        作用：告诉函数设置的最小值
+        max
+        类型：double_t
+        作用：告诉函数设置的最大值
+        mode
+        类型：setting_mode
+        作用：告诉函数设置的数据类型，方便控制单击加减
+*///
+bool set_setting_num( double_t* num , double_t min , double_t max , setting_mode mode ){
+
+    bool return_value = false;
+    double_t minus = max - min;//最大值-最小值的差
+    double_t adjust_num = 0;//决定调整速度
+
+    //长按检测
+    bool if_long_press = false;
+    if( get_press_time() > LONG_PRESS_THRESHOLD )
+    if_long_press = true;
+
+    //调整调整速度
+    if( if_long_press ){//长按
+        adjust_num = ( get_press_time() - LONG_PRESS_THRESHOLD );//得到长按的时间
+        adjust_num = ( adjust_num/20000 +0.01 ) * minus;//调整速度随时间线性增加
+    }else switch( mode ){//单击
+        case SETTING_MODE_INT:adjust_num = 1;break;
+        case SETTING_MODE_CHAR:adjust_num = 1;break;
+        case SETTING_MODE_DOUBLE:adjust_num = minus * 0.003;break;
+    }
+
+    //按键响应
+    if( if_long_press || get_first_key() )
+    switch( get_key_value() ){
+        case KEY_NULL:return false;break;
+        case KEY_UP_NUM:{   //--
+            *num -= adjust_num;
+            if(*num < min )
+            *num = min;
+        }break;
+        case KEY_OK_NUM:return true;break;
+        case KEY_DOWN_NUM:{ //++
+            *num += adjust_num;
+            if(*num > max )
+            *num = max;
+        }break;
+        case KEY_BACK_NUM:return true;break;
+    }vTaskDelay(50);
+
+    return false;
+}
+
+/*
     函数名字：set_double_setting
     函数功能：根据接口里的键值，设置小数类型值
     返回值：
@@ -20,38 +82,18 @@
 *///
 bool set_double_setting( setting* SET ){
 
-    double_t* ptr = (double_t*)SET->object;
-    double_t minus = SET->max - SET->min;//最大值-最小值的差
-    double_t adjust_num = 0;//决定调整速度
+    //设置值
+    bool return_value = set_setting_num( 
+        (double_t*)SET->object,
+        SET->min,
+        SET->max,
+        SET->MODE
+    );
 
-    //长按检查/调整调整速度
-    bool if_long_press = false;
-    if( get_press_time() > LONG_PRESS_THRESHOLD ){
-        if_long_press = true;
-        adjust_num = ( get_press_time() - LONG_PRESS_THRESHOLD );//得到长按的时间
-        adjust_num = ( adjust_num/50000 +0.005 ) * minus;//调整速度随时间线性增加
-    }else adjust_num = minus * 0.005;
-
-    //按键响应
-    uint8_t key = get_key_value();
-    if( if_long_press == true || get_first_key() == key )//当按下/松手更新
-    switch( key ){
-        case KEY_NULL:return false;
-        case KEY_UP_NUM:{   //--
-            *ptr -= adjust_num;
-            if(*ptr < SET->min )
-            *ptr = SET->min;
-        }break;
-        case KEY_OK_NUM:{}return true;
-        case KEY_DOWN_NUM:{ //++
-            *ptr += adjust_num;
-            if(*ptr > SET->max )
-            *ptr = SET->max;
-        }break;
-        case KEY_BACK_NUM:{}return true;
-    }vTaskDelay(50);
-
-    return false;
+    //返回
+    while( return_value && get_key_value() )
+    vTaskDelay(50);//当退出时先阻塞线程直到松手，防止多次检测按键
+    return return_value;
 }
 
 /*
@@ -66,38 +108,24 @@ bool set_double_setting( setting* SET ){
         作用：告诉函数调整哪个设置
 *///
 bool set_int_setting( setting* SET ){
+    
+    //初始化
+    static double_t value;
+    if( (int64_t)value != *(int64_t*)SET->object )
+    value = *(int64_t*)SET->object;
 
-    int64_t* ptr = (int64_t*)SET->object;
-    uint64_t time_0 = get_time_ms();
-    uint8_t ex_time;//决定调整选项的速度
-    uint64_t minus_num;//由按下时间计算改变幅度
+    //设置值
+    bool return_value = set_setting_num( 
+        &value,
+        SET->min,
+        SET->max,
+        SET->MODE
+    );*(int64_t*)SET->object = value;
 
-    //长按检查
-    ex_time = 0;//决定调整选项的速度
-    if( get_press_time() > LONG_PRESS_THRESHOLD ){
-        ex_time = get_press_time() - LONG_PRESS_THRESHOLD ;
-    }else ex_time = 0;//ex_time = 超过长按阈值的时间
-
-    //由按下时间计算改变幅度
-    minus_num = SET->max - SET->min ;//最大值和最小值差
-    minus_num = ( ex_time / 50000  + 0.005 ) * minus_num;//根据时间调整改变幅度
-
-    //调整值
-    switch( get_key_value() ){
-        case KEY_NULL:return false;
-        case KEY_UP_NUM:{   //--
-            if(*ptr >= SET->min )*ptr -= minus_num;
-        }break;
-        case KEY_OK_NUM:{}return true;
-        case KEY_DOWN_NUM:{ //++
-            if(*ptr <= SET->max )*ptr += minus_num;
-        }break;
-        case KEY_BACK_NUM:{}return true;
-    }
-
-    vTaskDelay( 50 - ( get_time_ms() - time_0 ) );
-
-    return false;
+    //返回
+    while( return_value && get_key_value() )
+    vTaskDelay(50);//当退出时先阻塞线程直到松手，防止多次检测按键
+    return return_value;
 }
 
 
@@ -113,34 +141,23 @@ bool set_int_setting( setting* SET ){
         作用：告诉函数调整哪个设置
 *///
 bool set_char_setting( setting* SET ){
+    //初始化
+    static double_t value;
+    if( (char)value != *(char*)SET->object )
+    value = *(char*)SET->object;
 
-    char* ptr = (char*)SET->object;
-    uint64_t time_0 = get_time_ms();
-    uint8_t speed = 0;//调整选项的速度
+    //设置值
+    SET->min = -0x80;
+    SET->max = 0x7f;
+    bool return_value = set_setting_num( 
+        &value,
+        SET->min,
+        SET->max,
+        SET->MODE
+    );*(char*)SET->object = (char)value;
 
-    //长按检查
-    if( get_press_time() > LONG_PRESS_THRESHOLD ){
-        speed = get_press_time() - LONG_PRESS_THRESHOLD ;
-    }else speed = 0;//speed = 超过长按阈值的时间
-
-    //调整值
-    switch( get_key_value() ){
-        case KEY_NULL:return false;
-        case KEY_UP_NUM:{ 
-            *ptr <= 32 ?
-            *ptr = 126 : *ptr --;
-        }break;
-        case KEY_OK_NUM:{}return true;
-        case KEY_DOWN_NUM:{
-            *ptr >= 126 ?
-            *ptr = 32 : *ptr ++;
-        }break;
-        case KEY_BACK_NUM:{}return true;
-    }
-
-    //改变延时来改变速度
-    if( speed = 0 ) vTaskDelay( 500 );
-    else            vTaskDelay( 400 / ( speed / 20 + 5 ) );
-
-    return false;
+    //返回
+    while( return_value && get_key_value() )
+    vTaskDelay(50);//当退出时先阻塞线程直到松手，防止多次检测按键
+    return return_value;
 }

@@ -351,28 +351,44 @@ void u8g2_print_BMP( display_info* INFO ){
         类型：setting*
         作用：传递要打印的设置参数
 *///
-void u8g2_print_setting( setting* SIT ){
+void u8g2_print_setting( setting* SET ){
 
     #if( IF_DEBUG_3 ==true )//debug
     Serial.println("u8g2_print_setting()");
     #endif
 
-    char param_ptr[20];
+    char str[24];
+    double_t value = 0;
 
     //打印
-    u8g2_print_title( SIT->name );//打印标题
-    switch( SIT->MODE ){//设置打印内容
+    u8g2_print_title( SET->name );//打印标题
+    switch( SET->MODE ){//设置打印内容
         case SETTING_MODE_DOUBLE:
-            sprintf( param_ptr , "值 -> %.6g", *(double_t*)SIT->object );
+            value = *(double_t*)SET->object;
+            sprintf( str , "value -> %.6g", *(double_t*)SET->object );
         break;
         case SETTING_MODE_CHAR:
-            sprintf( param_ptr , "字符 -> %c", *(char*)SIT->object );
+            value = *(int8_t*)SET->object;
+            sprintf( str , "char -> %c", *(int8_t*)SET->object );
+            char char_value_str[7];//显示char值
+            sprintf( char_value_str , "0x%x" , *(uint8_t*)SET->object );
+            u8g2.drawUTF8( 88 , 24 , char_value_str );//打印内容
         break;
         case SETTING_MODE_INT:
-            sprintf( param_ptr , "值 -> %.4g", *(int64_t*)SIT->object );
+            value = *(int64_t*)SET->object;
+            sprintf( str , "value -> %d", *(int64_t*)SET->object );
         break;
     }
-    u8g2.drawUTF8( 8 , 24 , param_ptr );//打印内容
-    //u8g2.drawBox( 6 , 22 , 114 , 16 );
-    u8g2.drawUTF8( 6 , 50 , "2/4.确认并退出" );
+    u8g2.drawUTF8( 8 , 24 , str );//打印内容
+    #if ( ENABLE_ANIM == true )//动画显示
+      u8g2.drawUTF8( 8 , 38 , "min" );//打印UI
+      u8g2.drawUTF8( 100 , 38 , "max" );
+      u8g2.drawHLine( 28 , 43 , (value - SET->min)/(SET->max - SET->min) *68 );
+    #elif ( ENABLE_ANIM == false )//非动画显示
+      value = (value - SET->min)/(SET->max - SET->min)*100;
+      sprintf( str , "%.2f%%", value);
+      u8g2.drawUTF8( 8 , 38 , str );//打印UI
+    #endif
+    
+    u8g2.drawUTF8( 4 , 51 , "2/4.确认并退出" );
 }

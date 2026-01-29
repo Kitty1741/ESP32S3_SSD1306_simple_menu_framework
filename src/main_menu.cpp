@@ -21,7 +21,7 @@ option MAIN_MENU_LIST[] = {
 //主菜单
 menu MAIN_MENU = {
     /*标题*/.name = "主菜单",
-    /*长度*/.length = sizeof(MAIN_MENU_LIST)/sizeof(MAIN_MENU_LIST[0]),
+    /*长度*/.length = lengthof(MAIN_MENU_LIST),
     /*选项列表*/.menu_list = MAIN_MENU_LIST,
 };
 //对应显示包

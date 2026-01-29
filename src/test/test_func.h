@@ -1,0 +1,1 @@
+bool show_time( void* no_param );
