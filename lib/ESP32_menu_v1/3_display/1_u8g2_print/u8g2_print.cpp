@@ -191,25 +191,18 @@ void u8g2_print_LOADING(){
     vTaskDelay( 20 );
     frame < 0xffff ? frame++ : frame = 0;
     
-    #if ( ENABLE_ANIM == true )//动画显示
-      float_t x1,x2;
-      if( frame % 30 < 15 ){
-        x2 = 88 + 48 * sin( frame % 15 * PI/2/15 + 1.5*PI );
-        x1 = 40;
-      }
-      else{
-        x1 = 40 + 48 * sin( frame % 15 * PI/2/15 );
-        x2 = 88;
-      }
-      if( x2 > x1 )
-      u8g2.drawLine(x1, 40, x2, 40);
-    #elif ( ENABLE_ANIM == false )//非动画显示
-      char c[2] = "|";
-      switch(frame / 5 % 4){
-        case 0:c[0]='|';break;case 1:c[0]='/';break;
-        case 2:c[0]='-';break;case 3:c[0]='\\';break;
-      }u8g2.drawStr(90, 26, c);
-    #endif
+    float_t x1,x2;
+    if( frame % 30 < 15 ){
+      x2 = 88 + 48 * sin( frame % 15 * PI/2/15 + 1.5*PI );
+      x1 = 40;
+    }
+    else{
+      x1 = 40 + 48 * sin( frame % 15 * PI/2/15 );
+      x2 = 88;
+    }
+    if( x2 > x1 )
+    u8g2.drawLine(x1, 40, x2, 40);
+
 }
 
 
@@ -380,15 +373,9 @@ void u8g2_print_setting( setting* SET ){
         break;
     }
     u8g2.drawUTF8( 8 , 24 , str );//打印内容
-    #if ( ENABLE_ANIM == true )//动画显示
-      u8g2.drawUTF8( 8 , 38 , "min" );//打印UI
-      u8g2.drawUTF8( 100 , 38 , "max" );
-      u8g2.drawHLine( 28 , 43 , (value - SET->min)/(SET->max - SET->min) *68 );
-    #elif ( ENABLE_ANIM == false )//非动画显示
-      value = (value - SET->min)/(SET->max - SET->min)*100;
-      sprintf( str , "%.2f%%", value);
-      u8g2.drawUTF8( 8 , 38 , str );//打印UI
-    #endif
+    u8g2.drawUTF8( 8 , 38 , "min" );//打印UI
+    u8g2.drawUTF8( 100 , 38 , "max" );
+    u8g2.drawBox( 28 , 42 , (value - SET->min)/(SET->max - SET->min) *66 , 3 );
     
     u8g2.drawUTF8( 4 , 51 , "2/4.确认并退出" );
 }

@@ -3,8 +3,7 @@
 
 #include "0_config/config.h"
 
-//是否启用动画风格(bool)
-#define ENABLE_ANIM true
+
 
 
 //定义U8G2使用的0.96屏幕类型
