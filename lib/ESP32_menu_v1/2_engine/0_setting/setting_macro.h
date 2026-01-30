@@ -1,3 +1,4 @@
+//setting_macro.h
 #ifndef __MENU_MACRO_H__
 #define __MENU_MACRO_H__
 

@@ -1,3 +1,4 @@
+//menu.cpp
 #include <Arduino.h>
 
 #include "1_driver/driver.h"
@@ -44,10 +45,10 @@ void task_loop( bool (*function)(void*) , void* param ){
         意义：返回是否按下退出,如果是返回true
     参数：
         MENU
-        类型：menu*
+        类型：m_menu_t*
         作用：告诉函数菜单的长度和用来设置谁的光标
 *///
-bool set_menu_cursor( menu *MENU ){
+bool set_menu_cursor( m_menu_t* MENU ){
 
     #if( IF_DEBUG_2 == true )//debug
     Serial.println("set_menu_cursor()");
@@ -65,8 +66,8 @@ bool set_menu_cursor( menu *MENU ){
         }break;
         case KEY_OK_NUM:{//进入光标所指选项
             task_loop(
-                MENU->menu_list[MENU->cursor].callback ,
-                MENU->menu_list[MENU->cursor].param
+                MENU->items[MENU->cursor].callback ,
+                MENU->items[MENU->cursor].param
             );
         }break;
         case KEY_DOWN_NUM:{//光标下移

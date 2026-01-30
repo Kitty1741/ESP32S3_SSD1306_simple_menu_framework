@@ -23,7 +23,7 @@ const uint8_t /*加载中仨字48x14*/mystery_chinese_word[] = {
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-image mystery_chinese_word_loading = {
+m_image_t mystery_chinese_word_loading = {
     .width = 48,
     .height = 14,
     .image_data = (uint8_t*)mystery_chinese_word,

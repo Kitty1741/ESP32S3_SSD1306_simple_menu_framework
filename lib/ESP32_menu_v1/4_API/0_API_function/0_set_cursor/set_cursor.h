@@ -9,8 +9,8 @@
 #include "3_display/display_struct.h"
 
 bool set_cursor( display_info* INFO );
-bool set_cursor( menu* MENU );
-bool set_cursor( list* LIST );
-bool set_cursor( setting* SET );
+bool set_cursor( m_menu_t* MENU );
+bool set_cursor( m_list_t* LIST );
+bool set_cursor( m_setting_t* SET );
 
 #endif

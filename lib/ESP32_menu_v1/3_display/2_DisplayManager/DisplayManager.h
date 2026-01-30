@@ -5,7 +5,7 @@
 
 void DisplayManager_init();
 
-void display_set( display_info *INFO );
+bool display_set( display_info *INFO );
 void display_refresh();
 
 #endif

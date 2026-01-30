@@ -27,7 +27,7 @@ display_info kulipa_image_info = to_display_info( &kulipa_image , 40 , 8 );
 //SET
 //int
 int64_t testint = 0;                
-setting TEST_SET_INT = {            
+m_setting_t TEST_SET_INT = {            
     .name = "测试int",              
     .MODE = SETTING_MODE_INT,       
     .object = &testint,             
@@ -37,7 +37,7 @@ setting TEST_SET_INT = {
 display_info TEST_SET_INT_INFO = to_display_info( &TEST_SET_INT );
 //char
 char testchar = '2';
-setting TEST_SET_CHAR = {
+m_setting_t TEST_SET_CHAR = {
 
     .name = "测试char",
     .MODE = SETTING_MODE_CHAR,
@@ -46,7 +46,7 @@ setting TEST_SET_CHAR = {
 display_info TEST_SET_CHAR_INFO = to_display_info( &TEST_SET_CHAR );
 //double
 double testdouble = 0;
-setting TEST_SET_DOUBLE = {
+m_setting_t TEST_SET_DOUBLE = {
 
     .name = "测试double",
     .MODE = SETTING_MODE_DOUBLE,
@@ -87,13 +87,14 @@ CREATE_LIST(test , {
 })
 display_info test_list_info = to_display_info( &test_list );
 
+extern char str[12];
 //菜单选项列表
 CREATE_MENU(test ,{
     {"设置测试",run_info,&test_engine_menu_info},
     {"自定义函数测试",momo_cat,NULL},
     {"测试loading",run_info,&loading_info},
     {"测试list",run_info,&test_list_info},
-    {"图片测试",run_info,&kulipa_image_info}
+    {"图片测试",run_info,&kulipa_image_info},
 })
 //对应显示信息
 display_info test_menu_info = to_display_info( &test_menu );

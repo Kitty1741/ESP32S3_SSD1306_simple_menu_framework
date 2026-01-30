@@ -1,3 +1,4 @@
+//menu_macro.h
 #ifndef __MENU_MACRO_H__
 #define __MENU_MACRO_H__
 
@@ -6,13 +7,13 @@
 #include "0_config/config.h"
 #include "menu_struct.h"
 
-#define CREATE_MENU(NAME, ... )                      \
-static option NAME##_menu_options[] = __VA_ARGS__;   \
-menu NAME##_menu = {                                 \
-    .name = #NAME,                                   \
-    .cursor = 0,                                     \
-    .length = lengthof(NAME##_menu_options),         \
-    .menu_list = NAME##_menu_options,                \
+#define CREATE_MENU(NAME, ... )                             \
+static m_option_t NAME##_menu_options[] = __VA_ARGS__;      \
+m_menu_t NAME##_menu = {                                    \
+    .name = #NAME,                                          \
+    .cursor = 0,                                            \
+    .length = lengthof(NAME##_menu_options),                \
+    .items = NAME##_menu_options,                           \
 };
 
 //eg.

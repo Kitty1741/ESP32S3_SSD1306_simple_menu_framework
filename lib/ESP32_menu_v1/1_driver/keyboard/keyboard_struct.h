@@ -14,7 +14,7 @@ keyboard里面的函数可以读取全局变量的键值
 
 
 //枚举键值
-typedef enum KEY_VALUE_t{
+typedef enum{
 
     KEY_NULL     =   KEY_NULL_VALUE,//没有按键按下
     KEY_UP_NUM   =   KEY_UP_NUM_VALUE,//“上”键
@@ -25,12 +25,9 @@ typedef enum KEY_VALUE_t{
 }KEY_VALUE;
 
 //按键信息结构体
-typedef struct menu_keyboard_t{
-
-    uint8_t key_enum;
-    uint8_t key_value;
+typedef struct{
+    KEY_VALUE key_value;
     uint16_t press_time;
-
-}menu_keyboard;
+}m_keyboard_t;//menu_keyboard
 
 #endif

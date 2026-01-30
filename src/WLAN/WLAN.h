@@ -21,6 +21,5 @@ typedef struct wifi_list{
 
 //extern
 extern wifi_info WLAN_CONNECTION_OPTIONS_INFO;
-extern option WLAN_MENU_OPTIONS[];
 
 #endif

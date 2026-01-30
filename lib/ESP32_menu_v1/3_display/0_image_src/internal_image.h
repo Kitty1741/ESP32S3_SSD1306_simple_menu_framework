@@ -2,8 +2,8 @@
 #define __PRIVATE_IMAGE_H__
 
 //这个文件用来声明内置图像
-typedef struct image_t image;
+#include "2_engine/engine_struct.h"
 
-extern image mystery_chinese_word_loading;
+extern m_image_t mystery_chinese_word_loading;
 
 #endif

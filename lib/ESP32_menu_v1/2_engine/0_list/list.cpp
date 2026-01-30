@@ -1,3 +1,4 @@
+//list.cpp
 #include <Arduino.h>
 
 #include "1_driver/driver.h"
@@ -15,10 +16,10 @@
         意义：返回是否按下退出,如果是返回true
     参数：
         LIST
-        类型：list*
+        类型：m_list_t*
         作用：告诉函数列表的长度和用来设置谁的光标
 *///
-bool set_list_cursor( list *LIST ){
+bool set_list_cursor( m_list_t *LIST ){
 
     #if( IF_DEBUG_2 == true )//debug
     Serial.println("set_list_cursor()");
@@ -36,8 +37,8 @@ bool set_list_cursor( list *LIST ){
         }break;
         case KEY_OK_NUM:break;
         case KEY_DOWN_NUM:{//光标下移
-            LIST->list[ LIST->cursor +3 ] != NULL ?
-            LIST->cursor ++ : LIST->list[ LIST->cursor +4 ] != NULL ?
+            LIST->items[ LIST->cursor +3 ] != NULL ?
+            LIST->cursor ++ : LIST->items[ LIST->cursor +4 ] != NULL ?
             LIST->cursor ++ : LIST->cursor += 0 ;
         }break;
         case KEY_BACK_NUM:{//返回

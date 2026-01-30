@@ -1,3 +1,4 @@
+//list_macro.h
 #ifndef __LIST_MACRO_H__
 #define __LIST_MACRO_H__
 
@@ -8,11 +9,11 @@
 
 #define CREATE_LIST( NAME , ... )                       \
 static const char* NAME##_list_items[] = __VA_ARGS__;   \
-list NAME##_list = {                                    \
+m_list_t NAME##_list = {                                \
     .name = #NAME,                                      \
     .cursor = 0,                                        \
     .length = lengthof(NAME##_list_items),              \
-    .list = NAME##_list_items,                          \
+    .items = NAME##_list_items,                         \
 };
 
 //eg.

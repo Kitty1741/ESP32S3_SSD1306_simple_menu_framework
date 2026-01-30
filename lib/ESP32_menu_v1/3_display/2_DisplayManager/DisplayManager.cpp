@@ -17,22 +17,26 @@ TaskHandle_t DisplayTask;//显示任务
 /*
     函数名字：set_display_info
     函数功能：设置打印内容
-    返回值：没有
+    返回值：
+        类型：bool
+        意义：设置是否成功
     参数：
         INFO
         类型：display_info*
         作用：设置打印链表的头
 *///
-void display_set( display_info *INFO ){
+bool display_set( display_info *INFO ){
 
     #if( IF_DEBUG_3 ==true )//debug
     Serial.println("set_display_info()");
     #endif
 
-    if( xSemaphoreTake( DisplayMutex, 20 ) == pdTRUE ){//如果没上锁
+    //脏检测待实现
+    if( xSemaphoreTake( DisplayMutex, 20 ) == pdTRUE ){//如果没上锁，上锁
         PRINT_INFO = *INFO;//更新显示信息
         xSemaphoreGive( DisplayMutex );//开锁
-    }
+        return true;//设置成功
+    }   return false;//没等到锁算设置失败
 }
 
 /*
@@ -69,9 +73,7 @@ void DisplayManager( void* no_param ){
     #endif
 
     while(1){
-        //检测到刷新信号就刷新
-        xSemaphoreTake( DisplayUpdateSem , portMAX_DELAY );
-                 /*关闭↓互斥锁，防止这时正好有人改动输出画面*/
+        xSemaphoreTake( DisplayUpdateSem , portMAX_DELAY );//检测到刷新信号，从这里开始执行
         if( xSemaphoreTake( DisplayMutex, 200 ) == pdTRUE ){//如果没上锁
             u8g2_print_display_info( &PRINT_INFO );//打印信息
             xSemaphoreGive( DisplayMutex );//开锁

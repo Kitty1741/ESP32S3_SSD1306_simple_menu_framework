@@ -37,15 +37,15 @@
       作用：表示打印图片左上角的坐标
       
 *///
-display_info to_display_info(menu *MENU)
+display_info to_display_info(m_menu_t *MENU)
 {return menu_to_display_info(MENU);}
-display_info to_display_info(list *LIST)
+display_info to_display_info(m_list_t *LIST)
 {return list_to_display_info(LIST);}
-display_info to_display_info( image* IMAGE )
+display_info to_display_info( m_image_t* IMAGE )
 {return image_to_display_info(IMAGE,0,0);}
-display_info to_display_info( image* IMAGE , uint8_t x , uint8_t y)
+display_info to_display_info( m_image_t* IMAGE , uint8_t x , uint8_t y)
 {return image_to_display_info(IMAGE,x,y);}
-display_info to_display_info(setting *SET)
+display_info to_display_info(m_setting_t *SET)
 {return setting_to_display_info(SET);}
 
 /*
@@ -56,10 +56,10 @@ display_info to_display_info(setting *SET)
       意义：包含一个菜单的打印信息
     参数：
       MENU
-      类型：menu*
+      类型：m_menu_t*
       作用：提供要配置的菜单的指针
 *///
-display_info menu_to_display_info(menu *MENU){
+display_info menu_to_display_info(m_menu_t *MENU){
   
     display_info INFO;
 
@@ -79,10 +79,10 @@ display_info menu_to_display_info(menu *MENU){
       意义：包含一个列表的打印信息
     参数：
       LIST
-      类型：list*
+      类型：m_list_t*
       作用：提供要配置的列表的指针
 *///
-display_info list_to_display_info(list *LIST){
+display_info list_to_display_info(m_list_t *LIST){
   
     display_info INFO;
 
@@ -104,7 +104,7 @@ display_info list_to_display_info(list *LIST){
         意义：返回需要渲染的图片的打印信息
     参数：
         IMAGE
-        类型：image*
+        类型：m_image_t*
         作用：指向需要打印的图片的地址
         x
         类型：uint8_t
@@ -114,7 +114,7 @@ display_info list_to_display_info(list *LIST){
         作用：表示打印图片左上角的坐标
 
 *///
-display_info image_to_display_info( image* IMAGE , uint8_t x , uint8_t y ){
+display_info image_to_display_info( m_image_t* IMAGE , uint8_t x , uint8_t y ){
     
     // 设置坐标
     display_info image_info;
@@ -135,10 +135,10 @@ display_info image_to_display_info( image* IMAGE , uint8_t x , uint8_t y ){
       意义：包含一个菜单的打印信息
     参数：
       SET
-      类型：setting*
+      类型：m_setting_t*
       作用：提供要配置的菜单的指针
 *///
-display_info setting_to_display_info(setting *SET){
+display_info setting_to_display_info(m_setting_t *SET){
   
     display_info INFO;
 

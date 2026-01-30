@@ -1,3 +1,4 @@
+//setting.cpp
 #include <Arduino.h>
 
 #include "0_config/config.h"
@@ -24,10 +25,10 @@
         类型：double_t
         作用：告诉函数设置的最大值
         mode
-        类型：setting_mode
+        类型：m_setting_mode
         作用：告诉函数设置的数据类型，方便控制单击加减
 *///
-bool set_setting_num( double_t* num , double_t min , double_t max , setting_mode mode ){
+bool set_setting_num( double_t* num , double_t min , double_t max , m_setting_mode mode ){
 
     bool return_value = false;
     double_t minus = max - min;//最大值-最小值的差
@@ -77,10 +78,10 @@ bool set_setting_num( double_t* num , double_t min , double_t max , setting_mode
         意义：返回是否按下退出,如果是返回true
     参数：
         SET
-        类型：setting*
+        类型：m_setting_t*
         作用：告诉函数调整哪个设置
 *///
-bool set_double_setting( setting* SET ){
+bool set_double_setting( m_setting_t* SET ){
 
     //设置值
     bool return_value = set_setting_num( 
@@ -104,10 +105,10 @@ bool set_double_setting( setting* SET ){
         意义：返回是否按下退出,如果是返回true
     参数：
         SET
-        类型：setting*
+        类型：m_setting_t*
         作用：告诉函数调整哪个设置
 *///
-bool set_int_setting( setting* SET ){
+bool set_int_setting( m_setting_t* SET ){
     
     //初始化
     static double_t value;
@@ -137,10 +138,10 @@ bool set_int_setting( setting* SET ){
         意义：返回是否按下退出,如果是返回true
     参数：
         SET
-        类型：setting*
+        类型：m_setting_t*
         作用：告诉函数调整哪个设置
 *///
-bool set_char_setting( setting* SET ){
+bool set_char_setting( m_setting_t* SET ){
     //初始化
     static double_t value;
     if( (char)value != *(char*)SET->object )

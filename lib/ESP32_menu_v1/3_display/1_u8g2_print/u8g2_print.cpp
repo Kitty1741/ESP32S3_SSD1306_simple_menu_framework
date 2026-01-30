@@ -178,7 +178,7 @@ void u8g2_print_LOADING(){
 
     //初始化
     static uint32_t frame = 0;
-    image* WORD_IMG = &mystery_chinese_word_loading;
+    m_image_t* WORD_IMG = &mystery_chinese_word_loading;
     display_info WORD;
     
     //设置显示文字  
@@ -215,7 +215,7 @@ void u8g2_print_LOADING(){
         类型：menu*
         作用：告诉函数应该打印哪个菜单
 *///
-void u8g2_print_menu( menu *MENU ){
+void u8g2_print_menu( m_menu_t *MENU ){
 
     #if( IF_DEBUG_3 ==true )//debug
     Serial.println("u8g2_print_menu()");
@@ -239,10 +239,10 @@ void u8g2_print_menu( menu *MENU ){
 
     for(int i=0; i<4; i++){
       if( i < MENU->length ){
-        u8g2.drawUTF8(4 ,18+12*i , MENU->menu_list[ i + view_line ].name );//打印选项名字
+        u8g2.drawUTF8(4 ,18+12*i , MENU->items[ i + view_line ].name );//打印选项名字
       }
     } 
-    width = u8g2.getUTF8Width( MENU->menu_list[ MENU->cursor ].name) +7;//打印光标
+    width = u8g2.getUTF8Width( MENU->items[ MENU->cursor ].name) +7;//打印光标
     u8g2.drawBox( 0 , ( MENU->cursor - view_line )*12 +16 , width , 13 ); 
     u8g2.drawBox( 127 , ( MENU->cursor / 1.0 / ( MENU->length -1 ) )*40+17 , 1 , 7 ); //打印位置指示器
 
@@ -275,7 +275,7 @@ void u8g2_print_list( display_info *INFO ){
         u8g2.drawUTF8(//打印对应行内容
             /*起始横坐标*/INFO->x ,
             /*起始纵坐标*/INFO->y + 12*i,
-            /* 打印内容 */INFO->data.list_t->list[ i + list_view_line ]
+            /* 打印内容 */INFO->data.list_t->items[ i + list_view_line ]
         );
     }
 }
@@ -297,7 +297,7 @@ void u8g2_print_BMP( display_info* INFO ){
 
     u8g2.setDrawColor(1);
     
-    image* IMAGE = INFO->data.img;
+    m_image_t* IMAGE = INFO->data.img;
     uint8_t bmp_data = 0;
     uint8_t x_cursor = 0;
     uint8_t y_cursor = 0;
@@ -344,7 +344,7 @@ void u8g2_print_BMP( display_info* INFO ){
         类型：setting*
         作用：传递要打印的设置参数
 *///
-void u8g2_print_setting( setting* SET ){
+void u8g2_print_setting( m_setting_t* SET ){
 
     #if( IF_DEBUG_3 ==true )//debug
     Serial.println("u8g2_print_setting()");

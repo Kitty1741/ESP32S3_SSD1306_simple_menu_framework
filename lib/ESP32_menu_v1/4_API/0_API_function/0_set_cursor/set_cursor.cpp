@@ -32,11 +32,11 @@ bool set_cursor( display_info* INFO ){
     default : break ;
     }return true;
 }
-bool set_cursor( menu* MENU )
+bool set_cursor( m_menu_t* MENU )
 { return set_menu_cursor( MENU ); }
-bool set_cursor( list* LIST )
+bool set_cursor( m_list_t* LIST )
 { return set_list_cursor( LIST ); }
-bool set_cursor( setting* SET ){
+bool set_cursor( m_setting_t* SET ){
     switch( SET->MODE ){
         case SETTING_MODE_DOUBLE:return set_double_setting( SET );
         case SETTING_MODE_INT:return set_int_setting( SET );

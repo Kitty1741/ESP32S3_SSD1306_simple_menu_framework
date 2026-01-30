@@ -22,9 +22,10 @@ CREATE_IMAGE(cat_13_0,13,{
 CREATE_IMAGE(love_you,8,{
 0xb6, 0xf7, 0xff, 0x7f, 0x3e, 0x1c, 0x88, 
 })
-display_info cat_13_1_image_info = to_display_info(&cat_13_1_image,0,1);
-display_info cat_13_0_image_info = to_display_info(&cat_13_0_image,0,1);
-display_info love_you_image_info = to_display_info(&love_you_image,16,3);
+display_info cat_13_1_image_info = to_display_info(&cat_13_1_image,64,20);
+display_info cat_13_0_image_info = to_display_info(&cat_13_0_image,64,20);
+display_info love_you_image_info = to_display_info(&love_you_image,81,23);
+
 
 bool momo_cat( void* no_param ){
 

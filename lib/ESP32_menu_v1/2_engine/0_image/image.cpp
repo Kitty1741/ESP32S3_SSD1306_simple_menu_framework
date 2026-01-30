@@ -1,3 +1,4 @@
+//image.cpp
 #include <Arduino.h>
 
 #include "image_setting.h"
@@ -17,13 +18,13 @@
     返回值：没有
     参数：
         IMAGE
-        类型：image*
+        类型：m_image_t*
         作用：传递传递要打印的图片信息
         if_black
         类型：bool
         作用：设置是否黑色背景
 */
-void set_black_image_background( image* IMAGE , bool if_black ){
+void set_black_image_background( m_image_t* IMAGE , bool if_black ){
 
     //涂黑背景
     IMAGE->if_black_background = if_black;
@@ -36,13 +37,13 @@ void set_black_image_background( image* IMAGE , bool if_black ){
     返回值：没有
     参数：
         IMAGE
-        类型：image*
+        类型：m_image_t*
         作用：传递要打印的图片信息
         n
         类型：uint8_t
         作用：设转动几次
 *///
-void rotate_image(image* IMAGE, uint8_t n) {
+void rotate_image(m_image_t* IMAGE, uint8_t n) {
     if (IMAGE == NULL || IMAGE->image_data == NULL) return;
     
     // 计算实际旋转次数（模4运算）

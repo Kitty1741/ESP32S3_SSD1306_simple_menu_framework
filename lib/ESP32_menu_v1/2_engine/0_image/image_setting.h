@@ -1,3 +1,4 @@
+//image_setting.h
 #ifndef __IMAGE_SETTING_H__
 #define __IMAGE_SETTING_H__
 

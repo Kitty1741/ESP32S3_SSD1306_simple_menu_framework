@@ -11,7 +11,7 @@
 该结构内部包含了各种类型
 */
 //固定的几种屏幕输出模式
-typedef enum PRINT_MODE_t{
+typedef enum{
     DISPLAY_MODE_NONE,      // 不显示
     DISPLAY_MODE_LOADING,   // 加载中
     DISPLAY_MODE_TEXT,      // 信息显示（简单信息）
@@ -24,10 +24,10 @@ typedef enum PRINT_MODE_t{
 //存储数据的共用体
 typedef union{
     char* str[6];//简单文本类型
-    menu* menu_t;//菜单类型
-    image* img;//图片类型
-    list* list_t;//列表类型
-    setting* setting_t;//设置类型
+    m_menu_t* menu_t;//菜单类型
+    m_image_t* img;//图片类型
+    m_list_t* list_t;//列表类型
+    m_setting_t* setting_t;//设置类型
 }display_data;
 
 //用来传值打印内容的结构
