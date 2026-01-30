@@ -9,15 +9,15 @@
 //长按时间阈值（ms）
 #define LONG_PRESS_THRESHOLD 400
 
-//是否开启调试模式(串口发送调试信息)(true/false)
-#define IF_DEBUG false
-#if( IF_DEBUG == true )
+//是否开启调试模式(串口发送调试信息)(1/0)
+#define IF_DEBUG 0
+#if( IF_DEBUG == 1 )
 
-#define IF_DEBUG_0 true//允许调试不同层
-#define IF_DEBUG_1 true
-#define IF_DEBUG_2 true
-#define IF_DEBUG_3 true
-#define IF_DEBUG_4 true
+#define IF_DEBUG_0 0//允许调试不同层
+#define IF_DEBUG_1 0
+#define IF_DEBUG_2 0
+#define IF_DEBUG_3 1
+#define IF_DEBUG_4 0
 
 #endif
 

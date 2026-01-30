@@ -3,12 +3,14 @@
 
 //定义了快速创建菜单的宏
 
+#include "0_config/config.h"
 #include "menu_struct.h"
 
 #define CREATE_MENU(NAME, ... )                      \
 static option NAME##_menu_options[] = __VA_ARGS__;   \
 menu NAME##_menu = {                                 \
     .name = #NAME,                                   \
+    .cursor = 0,                                     \
     .length = lengthof(NAME##_menu_options),         \
     .menu_list = NAME##_menu_options,                \
 };

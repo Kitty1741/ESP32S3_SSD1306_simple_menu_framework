@@ -29,11 +29,8 @@ void display_set( display_info *INFO ){
     Serial.println("set_display_info()");
     #endif
 
-    static display_info STATIC_INFO;//防止INFO指向临时变量
-    STATIC_INFO = *INFO;
-
-    if( xSemaphoreTake( DisplayMutex, 20 ) == pdTRUE ){//如果互斥锁打开
-        PRINT_INFO = STATIC_INFO;//更新
+    if( xSemaphoreTake( DisplayMutex, 20 ) == pdTRUE ){//如果没上锁
+        PRINT_INFO = *INFO;//更新显示信息
         xSemaphoreGive( DisplayMutex );//开锁
     }
 }
@@ -46,9 +43,13 @@ void display_set( display_info *INFO ){
 *///
 void display_refresh(){
 
-    if( xSemaphoreTake( DisplayMutex, 20 ) == pdTRUE ){//如果互斥锁打开
+    #if( IF_DEBUG_3 ==true )//debug
+    Serial.println("display_refresh()");
+    #endif
+
+    if( xSemaphoreTake( DisplayMutex, 20 ) == pdTRUE ){//如果没上锁
         xSemaphoreGive( DisplayMutex );//开锁
-        xSemaphoreGive( DisplayUpdateSem );//更新显示信号
+        xSemaphoreGive( DisplayUpdateSem );//发送更新显示信号
     }
 }
 
@@ -71,7 +72,7 @@ void DisplayManager( void* no_param ){
         //检测到刷新信号就刷新
         xSemaphoreTake( DisplayUpdateSem , portMAX_DELAY );
                  /*关闭↓互斥锁，防止这时正好有人改动输出画面*/
-        if( xSemaphoreTake( DisplayMutex, 0 ) == pdTRUE ){//如果关锁成功
+        if( xSemaphoreTake( DisplayMutex, 200 ) == pdTRUE ){//如果没上锁
             u8g2_print_display_info( &PRINT_INFO );//打印信息
             xSemaphoreGive( DisplayMutex );//开锁
         }vTaskDelay(1);
@@ -91,7 +92,7 @@ void DisplayManager_init(){
     xTaskCreate(
         DisplayManager,        // 任务函数指针
         "DisplayManager",     // 任务名称（调试用）
-        12288,               // 任务栈大小（字节）
+        10240,               // 任务栈大小（字节）
         NULL,               // 传递给任务的参数（本例为空）
         3,                 // 任务优先级（1-24）
         &DisplayTask      //任务句柄 (用于引用此任务)（TaskHandle_t值的地址）

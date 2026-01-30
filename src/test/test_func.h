@@ -1,1 +1,1 @@
-bool show_time( void* no_param );
+bool momo_cat( void* no_param );

@@ -7,7 +7,8 @@ typedef struct list_t{
 
     const char *name;//列表的标题
     uint16_t cursor;//列表的光标位置
-    const char *list[64];//列表选项内容（ptr）
+    uint16_t length;//列表的长度
+    const char**list;//列表选项内容（ptr）
 
 }list;
 

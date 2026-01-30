@@ -25,7 +25,7 @@ bool set_list_cursor( list *LIST ){
     #endif
 
     uint8_t list_key;
-    list_key = get_last_key();//检测松手键值
+    list_key = get_first_key();//检测按下键值
 
     //根据输入的键值确定光标移动/其他操作
     switch( list_key ){
@@ -44,7 +44,7 @@ bool set_list_cursor( list *LIST ){
             LIST->cursor = 0;
             return true;
         }break;
-    }list_key = KEY_NULL;
+    }
 
     return false;
 }

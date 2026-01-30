@@ -16,8 +16,8 @@ typedef struct option_t{
 typedef struct menu_t{
 
     const char *name;//菜单的标题
-    uint16_t length;//菜单的列表长度
     uint16_t cursor;//菜单的光标位置
+    uint16_t length;//菜单的列表长度
     option *menu_list;//菜单对应的选项列表
 
 }menu;

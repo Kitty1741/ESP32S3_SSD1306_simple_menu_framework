@@ -266,15 +266,15 @@ void u8g2_print_list( display_info *INFO ){
     Serial.println("u8g2_print_list()");
     #endif
 
-    uint8_t list_view_line = INFO->data.list_t->cursor;//列表显示在屏幕上的第一行对应光标行数
+    uint16_t list_view_line = INFO->data.list_t->cursor;//列表显示在屏幕上的第一行对应光标行数
 
-    for(int i=0;i<6;i++){//屏幕上一共可以完整的显示五行
-        if( INFO->data.list_t->list[ i + list_view_line ] == NULL ){
-            break;
+    for(int i=0;i<6;i++){
+        if( i + list_view_line >= INFO->data.list_t->length ){
+            return;
         }//防空指针
         u8g2.drawUTF8(//打印对应行内容
             /*起始横坐标*/INFO->x ,
-            /*起始纵坐标*/INFO->y + 12*i ,
+            /*起始纵坐标*/INFO->y + 12*i,
             /* 打印内容 */INFO->data.list_t->list[ i + list_view_line ]
         );
     }
