@@ -1,14 +1,14 @@
+//to_ui_node.cpp
 #include <Arduino.h>
 
 #include "to_ui_node_private.h"
 #include "to_ui_node.h"
 
-//本文件用于存放API提供的常用函数
-//最有用包装最深的功能都在这了
+//提供了一套重载函数，可以把m_ui_data_t里面定义的类型转化为m_ui_node_t
 
 
 /*
-    函数名字：to_ui_node（重载5）
+    函数名字：to_node（重载5）
     函数功能：用来把低级结构转化为打印信息
     返回值：
       类型：m_ui_node_t
@@ -123,6 +123,7 @@ m_ui_node_t image_to_node( m_image_t* IMAGE , uint8_t x , uint8_t y ){
     
     image_node.type = UI_TYPE_IMAGE;//图片打印模式
     image_node.data.image = IMAGE;
+    image_node.next = NULL;
     return image_node;
 }
 

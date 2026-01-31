@@ -22,6 +22,7 @@ typedef enum{
 
 //存储数据的共用体
 typedef union{
+    //char a[5];//诡异的bug：删掉这行代码，打印图片崩溃
     m_menu_t* menu;//菜单类型
     m_image_t* image;//图片类型
     m_list_t* list;//列表类型

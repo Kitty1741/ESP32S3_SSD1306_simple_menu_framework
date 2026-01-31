@@ -132,49 +132,6 @@ void u8g2_print_ui_node( m_ui_node_t* node ){
 }
 
 
-
-/*
-    函数名字：u8g2_print_LOADING
-    函数功能：打印加载界面
-    返回值：没有
-    参数：没有
-*///
-void u8g2_print_LOADING(){
-
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("u8g2_print_LOADING()");
-    #endif
-
-    //初始化
-    static uint32_t frame = 0;
-    m_image_t* WORD_IMG = &mystery_chinese_word_loading;
-    m_ui_node_t WORD;
-    
-    //设置显示文字  
-    WORD.type = UI_TYPE_IMAGE; 
-    WORD.x = 41;  WORD.y = 23;
-    WORD.data.image = WORD_IMG;
-    u8g2_print_image( &WORD );//不要引入新字体，吃我内存
-    
-    //显示动画
-    vTaskDelay( 20 );
-    frame < 0xffff ? frame++ : frame = 0;
-    
-    float_t x1,x2;
-    if( frame % 30 < 15 ){
-      x2 = 88 + 48 * sin( frame % 15 * PI/2/15 + 1.5*PI );
-      x1 = 40;
-    }
-    else{
-      x1 = 40 + 48 * sin( frame % 15 * PI/2/15 );
-      x2 = 88;
-    }
-    if( x2 > x1 )
-    u8g2.drawLine(x1, 40, x2, 40);
-
-}
-
-
 /*
     函数名字：u8g2_print_menu
     函数功能：打印菜单
@@ -321,6 +278,8 @@ void u8g2_print_setting( m_ui_node_t* node ){
     Serial.println("u8g2_print_setting()");
     #endif
 
+    if( node->data.setting->object == NULL )return;
+
     m_setting_t* set = node->data.setting;
     char str[24];
     double_t value = 0;
@@ -350,4 +309,46 @@ void u8g2_print_setting( m_ui_node_t* node ){
     u8g2.drawBox( 28 , 42 , (value - set->min)/(set->max - set->min) *66 , 3 );
     
     u8g2.drawUTF8( 4 , 51 , "2/4.确认并退出" );
+}
+
+/*
+    函数名字：u8g2_print_LOADING
+    函数功能：打印加载界面
+    返回值：没有
+    参数：没有
+*///
+void u8g2_print_LOADING(){
+
+    #if( IF_DEBUG_3 ==true )//debug
+    Serial.println("u8g2_print_LOADING()");
+    #endif
+
+    //初始化
+    static uint32_t frame = 0;
+    m_image_t* WORD_IMG = &mystery_chinese_word_loading;
+    m_ui_node_t WORD;
+    
+    //设置显示文字  
+    WORD.type = UI_TYPE_IMAGE; 
+    WORD.x = 41;  WORD.y = 23;
+    WORD.data.image = WORD_IMG;
+    WORD.next = NULL; // 明确初始化next指针
+    u8g2_print_image( &WORD );//不要引入新字体，吃我内存
+    
+    //显示动画
+    vTaskDelay( 20 );
+    frame < 0xffff ? frame++ : frame = 0;
+    
+    float_t x1,x2;
+    if( frame % 30 < 15 ){
+      x2 = 88 + 48 * sin( frame % 15 * PI/2/15 + 1.5*PI );
+      x1 = 40;
+    }
+    else{
+      x1 = 40 + 48 * sin( frame % 15 * PI/2/15 );
+      x2 = 88;
+    }
+    if( x2 > x1 )
+    u8g2.drawLine(x1, 40, x2, 40);
+
 }
