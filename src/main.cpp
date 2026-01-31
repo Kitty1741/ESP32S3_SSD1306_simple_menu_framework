@@ -1,8 +1,7 @@
 #include <Arduino.h>
 #include <menu_API.h>
-#include <WLAN/WLAN.h>
 
-extern display_info main_menu_info;
+extern m_ui_node_t main_menu_node;
 
 void setup() {
 
@@ -11,5 +10,5 @@ void setup() {
 }
 void loop(){
     //主菜单
-    run_info( &main_menu_info );
+    run_node( &main_menu_node );
 }

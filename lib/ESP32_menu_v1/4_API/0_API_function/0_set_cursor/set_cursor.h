@@ -8,7 +8,7 @@
 #include "2_engine/engine_struct.h"
 #include "3_display/display_struct.h"
 
-bool set_cursor( display_info* INFO );
+bool set_cursor( m_ui_node_t* node );
 bool set_cursor( m_menu_t* MENU );
 bool set_cursor( m_list_t* LIST );
 bool set_cursor( m_setting_t* SET );

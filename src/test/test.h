@@ -4,6 +4,6 @@
 #include <menu_API.h>
 
 //MENU
-extern display_info test_menu_info;
+extern m_ui_node_t test_menu_node;
 
 #endif

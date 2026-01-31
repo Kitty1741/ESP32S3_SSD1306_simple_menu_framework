@@ -9,7 +9,7 @@
         意义：返回是否按下退出,如果是返回true
     参数：
         INFO
-        类型：display_info*
+        类型：m_ui_node_t*
         作用：引入需要设置的菜单/列表
     或者
         MENU
@@ -24,11 +24,11 @@
         类型：setting*
         作用：作为参数引入需要设置的列表
 *///
-bool set_cursor( display_info* INFO ){
-    switch ( INFO->mode ){
-    case DISPLAY_MODE_LIST  : return set_cursor( INFO->data.list_t );
-    case DISPLAY_MODE_MENU  : return set_cursor( INFO->data.menu_t );
-    case DISPLAY_MODE_SETTING:return set_cursor( INFO->data.setting_t );
+bool set_cursor( m_ui_node_t* node ){
+    switch ( node->type ){
+    case UI_TYPE_LIST  : return set_cursor( node->data.list );
+    case UI_TYPE_MENU  : return set_cursor( node->data.menu );
+    case UI_TYPE_SETTING:return set_cursor( node->data.setting );
     default : break ;
     }return true;
 }

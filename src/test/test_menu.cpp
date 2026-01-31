@@ -22,7 +22,7 @@ CREATE_IMAGE( kulipa , 48 , {
     0x00,0xff,0x00,0x00,0xff,0x00,  0x00,0xff,0x00,0x00,0xff,0x00,  0x00,0xff,0x00,0x00,0xff,0x00,  0x00,0xff,0x00,0x00,0xff,0x00,
     0x00,0xff,0x00,0x00,0xff,0x00,  0x00,0xff,0x00,0x00,0xff,0x00,  0x00,0xff,0x00,0x00,0xff,0x00,  0x00,0xff,0x00,0x00,0xff,0x00,
 })
-display_info kulipa_image_info = to_display_info( &kulipa_image , 40 , 8 );
+m_ui_node_t kulipa_image_node = to_node( &kulipa_image , 40 , 8 );
 
 //SET
 //int
@@ -34,7 +34,7 @@ m_setting_t TEST_SET_INT = {
     .min = 0,                 
     .max = 255,                 
 };                                  
-display_info TEST_SET_INT_INFO = to_display_info( &TEST_SET_INT );
+m_ui_node_t TEST_SET_INT_node = to_node( &TEST_SET_INT );
 //char
 char testchar = '2';
 m_setting_t TEST_SET_CHAR = {
@@ -43,7 +43,7 @@ m_setting_t TEST_SET_CHAR = {
     .MODE = SETTING_MODE_CHAR,
     .object = &testchar,
 };
-display_info TEST_SET_CHAR_INFO = to_display_info( &TEST_SET_CHAR );
+m_ui_node_t TEST_SET_CHAR_node = to_node( &TEST_SET_CHAR );
 //double
 double testdouble = 0;
 m_setting_t TEST_SET_DOUBLE = {
@@ -55,22 +55,22 @@ m_setting_t TEST_SET_DOUBLE = {
     .max = 1*PI,
     
 };
-display_info TEST_SET_DOUBLE_INFO = to_display_info( &TEST_SET_DOUBLE );
+m_ui_node_t TEST_SET_DOUBLE_node = to_node( &TEST_SET_DOUBLE );
 
 
 //测试菜单选项列表
 CREATE_MENU(test_engine,{
-    {"设置char"  ,run_info  ,&TEST_SET_CHAR_INFO   },
-    {"设置int"   ,run_info  ,&TEST_SET_INT_INFO    },
-    {"设置double",run_info  ,&TEST_SET_DOUBLE_INFO },
+    {"设置char"  ,run_node  ,&TEST_SET_CHAR_node   },
+    {"设置int"   ,run_node  ,&TEST_SET_INT_node    },
+    {"设置double",run_node  ,&TEST_SET_DOUBLE_node },
 })
 
-display_info test_engine_menu_info = to_display_info( &test_engine_menu );
+m_ui_node_t test_engine_menu_node = to_node( &test_engine_menu );
 
 
 //LOADING
-display_info loading_info = {
-    .mode = DISPLAY_MODE_LOADING,
+m_ui_node_t loading_node = {
+    .type = UI_TYPE_LOADING,
 };
 
 //测试list
@@ -85,16 +85,16 @@ CREATE_LIST(test , {
     "ABC8",
     "ABC9",
 })
-display_info test_list_info = to_display_info( &test_list );
+m_ui_node_t test_list_node = to_node( &test_list );
 
 extern char str[12];
 //菜单选项列表
 CREATE_MENU(test ,{
-    {"设置测试",run_info,&test_engine_menu_info},
+    {"设置测试",run_node,&test_engine_menu_node},
     {"自定义函数测试",momo_cat,NULL},
-    {"测试loading",run_info,&loading_info},
-    {"测试list",run_info,&test_list_info},
-    {"图片测试",run_info,&kulipa_image_info},
+    {"测试loading",run_node,&loading_node},
+    {"测试list",run_node,&test_list_node},
+    {"图片测试",run_node,&kulipa_image_node},
 })
 //对应显示信息
-display_info test_menu_info = to_display_info( &test_menu );
+m_ui_node_t test_menu_node = to_node( &test_menu );

@@ -7,34 +7,29 @@ CREATE_IMAGE(cat_13_1,13,{
 0x1f, 0xc1, 0x20, 0x32, 0x40, 0x0a, 0x40, 0x05, 0xbe, 0x1c, 0x81, 0x2c, 0x9c, 0xcc, 0x80, 0x0c, 0x8f, 0x8c, 0x88, 0x8c, 0x87, 0x0f
 })
 CREATE_IMAGE(cat_13_0,13,{
-0x10, 0x41, 
-0x28, 0xa2, 
-0x47, 0x12, 
-0x40, 0x14, 
-0x88, 0x8c, 
-0x88, 0x8c, 
-0x88, 0x8c, 
-0x80, 0x0c, 
-0x80, 0x0c, 
-0x80, 0x0c, 
+0x10, 0x41, 0x28, 0xa2, 
+0x47, 0x12, 0x40, 0x14, 
+0x88, 0x8c, 0x88, 0x8c, 
+0x88, 0x8c, 0x80, 0x0c, 
+0x80, 0x0c, 0x80, 0x0c, 
 0x80, 0x0f
 })
 CREATE_IMAGE(love_you,8,{
 0xb6, 0xf7, 0xff, 0x7f, 0x3e, 0x1c, 0x88, 
 })
-display_info cat_13_1_image_info = to_display_info(&cat_13_1_image,64,20);
-display_info cat_13_0_image_info = to_display_info(&cat_13_0_image,64,20);
-display_info love_you_image_info = to_display_info(&love_you_image,81,23);
+m_ui_node_t cat_13_1_image_node = to_node(&cat_13_1_image,64,20);
+m_ui_node_t cat_13_0_image_node = to_node(&cat_13_0_image,64,20);
+m_ui_node_t love_you_image_node = to_node(&love_you_image,81,23);
 
 
 bool momo_cat( void* no_param ){
 
-    cat_13_1_image_info.next = &love_you_image_info;
+    cat_13_1_image_node.next = &love_you_image_node;
     if ( get_key_value() == KEY_BACK_NUM )
     return true;
     else if( get_key_value() == KEY_OK_NUM )
-    display_set(&cat_13_1_image_info);
-    else display_set(&cat_13_0_image_info);
+    display_set(&cat_13_1_image_node);
+    else display_set(&cat_13_0_image_node);
     display_refresh();
 
     return false;

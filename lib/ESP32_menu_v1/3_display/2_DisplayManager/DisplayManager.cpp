@@ -6,8 +6,8 @@
 #include "DisplayManager_internal.h"
 #include "DisplayManager.h"
 
-//自动打印的display_info变量
-display_info PRINT_INFO;
+//打印调用的指针
+m_ui_node_t* PRINT_INFO;
 
 //freeRTOS
 SemaphoreHandle_t DisplayMutex = NULL;//显示互斥锁
@@ -15,17 +15,17 @@ QueueHandle_t  DisplayUpdateSem = NULL;//显示刷新信号
 TaskHandle_t DisplayTask;//显示任务
 
 /*
-    函数名字：set_display_info
+    函数名字：display_set
     函数功能：设置打印内容
     返回值：
         类型：bool
         意义：设置是否成功
     参数：
-        INFO
-        类型：display_info*
+        node
+        类型：m_ui_node_t*
         作用：设置打印链表的头
 *///
-bool display_set( display_info *INFO ){
+bool display_set( m_ui_node_t* node ){
 
     #if( IF_DEBUG_3 ==true )//debug
     Serial.println("set_display_info()");
@@ -33,7 +33,7 @@ bool display_set( display_info *INFO ){
 
     //脏检测待实现
     if( xSemaphoreTake( DisplayMutex, 20 ) == pdTRUE ){//如果没上锁，上锁
-        PRINT_INFO = *INFO;//更新显示信息
+        PRINT_INFO = node;//更新显示信息
         xSemaphoreGive( DisplayMutex );//开锁
         return true;//设置成功
     }   return false;//没等到锁算设置失败
@@ -75,7 +75,7 @@ void DisplayManager( void* no_param ){
     while(1){
         xSemaphoreTake( DisplayUpdateSem , portMAX_DELAY );//检测到刷新信号，从这里开始执行
         if( xSemaphoreTake( DisplayMutex, 200 ) == pdTRUE ){//如果没上锁
-            u8g2_print_display_info( &PRINT_INFO );//打印信息
+            u8g2_print_ui_node( PRINT_INFO );//打印信息
             xSemaphoreGive( DisplayMutex );//开锁
         }vTaskDelay(1);
     }

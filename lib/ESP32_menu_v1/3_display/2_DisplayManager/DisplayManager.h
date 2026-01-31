@@ -5,7 +5,7 @@
 
 void DisplayManager_init();
 
-bool display_set( display_info *INFO );
+bool display_set( m_ui_node_t* node );
 void display_refresh();
 
 #endif

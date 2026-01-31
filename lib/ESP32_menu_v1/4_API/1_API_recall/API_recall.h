@@ -9,7 +9,7 @@
 #include "4_API/0_API_function/0_set_cursor/set_cursor.h"
 
 //recall
-bool run_info(void* param);
+bool run_node(void* param);
 bool do_nothing( void* do_nothing );
 
 #endif

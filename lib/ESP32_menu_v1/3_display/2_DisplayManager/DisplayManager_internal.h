@@ -5,8 +5,8 @@
 
 #include "3_display/display_struct.h"
 
-//自动打印的display_info变量
-extern display_info PRINT_INFO;
+//打印调用的m_ui_node_t变量指针
+extern m_ui_node_t* PRINT_INFO;
 
 //freeRTOS调用显示变量
 extern SemaphoreHandle_t DisplayMutex;//显示互斥锁

@@ -4,8 +4,6 @@
 #include "0_config/config.h"
 
 
-
-
 //定义U8G2使用的0.96屏幕类型
 //IIC 或者 SPI
 #define U8G2_MODE IIC

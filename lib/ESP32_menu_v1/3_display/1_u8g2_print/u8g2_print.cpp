@@ -72,96 +72,65 @@ inline void u8g2_print_title( const char* title ){
 
 
 /*
-    函数名字：u8g2_print_display_info
+    函数名字：u8g2_print_ui_node_once
     函数功能：打印链表的一个节点
     返回值：没有
     参数：
-        INFO
-        类型：display_info*
+        node
+        类型：m_ui_node_t*
         作用：传递打印数据
 *///
-inline void u8g2_print_display_info_once(display_info *INFO){
+inline void u8g2_print_ui_node_once(m_ui_node_t* node){
 
     #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("u8g2_print_display_info_once()");
+    Serial.println("u8g2_print_ui_node_once()");
     #endif
 
-    switch( INFO->mode ){
-        case DISPLAY_MODE_NONE   :break;// 不显示
-        case DISPLAY_MODE_LOADING:{
+    switch( node->type ){
+        case UI_TYPE_NONE :break;// 不显示
+        case UI_TYPE_LOADING:{
             u8g2_print_LOADING();
         }break;// 加载中
-        case DISPLAY_MODE_TEXT   :{
-            u8g2_print_TEXT( INFO );
-        }break;// 信息显示(简单提示)
-        case DISPLAY_MODE_MENU   :{
-            u8g2_print_menu( INFO->data.menu_t );
+        case UI_TYPE_MENU   :{
+            u8g2_print_menu( node );
         }break;// 菜单显示
-        case DISPLAY_MODE_LIST   :{
-            u8g2_print_list( INFO );
+        case UI_TYPE_LIST   :{
+            u8g2_print_list( node );
         }break;// 文字列表
-        case DISPLAY_MODE_IMAGE  :{
-            u8g2_print_BMP( INFO );
+        case UI_TYPE_IMAGE  :{
+            u8g2_print_image( node );
         }break;// 图片显示
-        case DISPLAY_MODE_SETTING:{
-            u8g2_print_setting( INFO->data.setting_t );
+        case UI_TYPE_SETTING:{
+            u8g2_print_setting( node );
         }break;// 设置界面显示
     }
 }
 
 /*
-    函数名字：u8g2_print_display_info
+    函数名字：u8g2_print_ui_node
     函数功能：打印一大根链表
     返回值：没有
     参数：
-        INFO
-        类型：display_info*
+        node
+        类型：m_ui_node_t*
         作用：告诉函数打印链表的起点
 *///
-void u8g2_print_display_info( display_info *INFO ){
+void u8g2_print_ui_node( m_ui_node_t* node ){
 
     #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("u8g2_print_display_info()");
+    Serial.println("u8g2_print_ui_node()");
     #endif
 
     u8g2.clearBuffer();    // 清Buffer缓冲区的数
 
-    display_info *INFOptr = INFO;//创建一个指针
-    while( INFOptr != NULL ){//如果当前指针不是空指针
-        u8g2_print_display_info_once(INFOptr);//每打印一次
-        INFOptr = INFOptr->next;//指针向后移位
+    while( node != NULL ){//如果当前指针不是空指针
+        u8g2_print_ui_node_once( node );//每打印一次
+        node = node->next;//指针向后移位
     }
 
     u8g2.sendBuffer();    // 将Buffer帧缓冲区的内容发送到显示器,发送刷新消息
-
 }
 
-
-
-
-/*
-    函数名字：u8g2_print_TEXT
-    函数功能：打印简单信息
-    返回值：没有
-    参数：
-        INFO
-        类型：display_info*
-        作用：传递要打印的简单信息
-*///
-void u8g2_print_TEXT( display_info *INFO ){
-
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("u8g2_print_TEXT()");
-    #endif
-
-    for(int i=0;i<6;i++){
-        if( INFO->data.str[i] == NULL ){
-            break;
-        }
-        u8g2.drawUTF8( INFO->x , 12*i + INFO->y , INFO->data.str[i] );
-    }
-
-}
 
 
 /*
@@ -179,13 +148,13 @@ void u8g2_print_LOADING(){
     //初始化
     static uint32_t frame = 0;
     m_image_t* WORD_IMG = &mystery_chinese_word_loading;
-    display_info WORD;
+    m_ui_node_t WORD;
     
     //设置显示文字  
-    WORD.mode = DISPLAY_MODE_IMAGE; 
+    WORD.type = UI_TYPE_IMAGE; 
     WORD.x = 41;  WORD.y = 23;
-    WORD.data.img = WORD_IMG;
-    u8g2_print_BMP( &WORD );//不要引入新字体，吃我内存
+    WORD.data.image = WORD_IMG;
+    u8g2_print_image( &WORD );//不要引入新字体，吃我内存
     
     //显示动画
     vTaskDelay( 20 );
@@ -208,43 +177,44 @@ void u8g2_print_LOADING(){
 
 /*
     函数名字：u8g2_print_menu
-    函数功能：打印给定菜单
+    函数功能：打印菜单
     返回值：没有
     参数：
-        MENU
-        类型：menu*
+        node
+        类型：m_ui_node_t*
         作用：告诉函数应该打印哪个菜单
 *///
-void u8g2_print_menu( m_menu_t *MENU ){
+void u8g2_print_menu( m_ui_node_t* node ){
 
     #if( IF_DEBUG_3 ==true )//debug
     Serial.println("u8g2_print_menu()");
     #endif
 
-    static uint8_t view_line = 0;//显示的第一行
-    static uint8_t width;//打印字符的宽度(用来设置光标)
+    uint8_t view_line = 0;//显示的第一行
+    uint8_t width = 0;//打印字符的宽度(用来设置光标)
+    m_menu_t* menu = node->data.menu;
 
     //通过光标计算屏幕所在行
-    if( MENU->length < 4 ){
+    if( menu->length < 4 ){
       view_line = 0;
     }else{
-      MENU->cursor == 0                 ? view_line = 0 :
-      MENU->cursor == MENU->length -2   ? view_line = MENU->cursor -2 :
-      MENU->cursor == MENU->length -1   ? view_line = MENU->cursor -3 :
-      /*default*/view_line = MENU->cursor -1;
+      menu->cursor == 0                 ? view_line = 0 :
+      menu->cursor == menu->length -2   ? view_line = menu->cursor -2 :
+      menu->cursor == menu->length -1   ? view_line = menu->cursor -3 :
+      /*default*/view_line = menu->cursor -1;
     }
 
     //显示到U8G2
-    u8g2_print_title( MENU->name );
+    u8g2_print_title( menu->name );
 
     for(int i=0; i<4; i++){
-      if( i < MENU->length ){
-        u8g2.drawUTF8(4 ,18+12*i , MENU->items[ i + view_line ].name );//打印选项名字
+      if( i < menu->length ){
+        u8g2.drawUTF8(4 ,18+12*i , menu->items[ i + view_line ].name );//打印选项名字
       }
     } 
-    width = u8g2.getUTF8Width( MENU->items[ MENU->cursor ].name) +7;//打印光标
-    u8g2.drawBox( 0 , ( MENU->cursor - view_line )*12 +16 , width , 13 ); 
-    u8g2.drawBox( 127 , ( MENU->cursor / 1.0 / ( MENU->length -1 ) )*40+17 , 1 , 7 ); //打印位置指示器
+    width = u8g2.getUTF8Width( menu->items[ menu->cursor ].name) +7;//打印光标
+    u8g2.drawBox( 0 , ( menu->cursor - view_line )*12 +16 , width , 13 ); 
+    u8g2.drawBox( 127 , ( menu->cursor / 1.0 / ( menu->length -1 ) )*40+17 , 1 , 7 ); //打印位置指示器
 
     return;
 }
@@ -253,51 +223,52 @@ void u8g2_print_menu( m_menu_t *MENU ){
 
 /*
     函数名字：u8g2_print_list
-    函数功能：打印可以调整观看位置的列表
+    函数功能：打印列表
     返回值：没有
     参数：
-        INFO
-        类型：display_info*
+        node
+        类型：m_ui_node_t*
         作用：传递要打印的列表信息
 *///
-void u8g2_print_list( display_info *INFO ){
+void u8g2_print_list( m_ui_node_t* node ){
 
     #if( IF_DEBUG_3 ==true )//debug
     Serial.println("u8g2_print_list()");
     #endif
 
-    uint16_t list_view_line = INFO->data.list_t->cursor;//列表显示在屏幕上的第一行对应光标行数
+    m_list_t* list = node->data.list;
+    uint16_t list_view_line = list->cursor;//列表显示在屏幕上的第一行对应光标行数
 
     for(int i=0;i<6;i++){
-        if( i + list_view_line >= INFO->data.list_t->length ){
+        if( i + list_view_line >= list->length ){
             return;
         }//防空指针
         u8g2.drawUTF8(//打印对应行内容
-            /*起始横坐标*/INFO->x ,
-            /*起始纵坐标*/INFO->y + 12*i,
-            /* 打印内容 */INFO->data.list_t->items[ i + list_view_line ]
+            /*起始横坐标*/node->x ,
+            /*起始纵坐标*/node->y + 12*i,
+            /* 打印内容 */list->items[ i + list_view_line ]
         );
     }
 }
 
 /*
-    函数名字：u8g2_print_BMP
-    函数功能：打印image_data类型图片，支持简单地叠加处理（是否涂黑背景）
+    函数名字：u8g2_print_image
+    函数功能：打印m_image_t类型图片，支持简单地叠加处理（是否涂黑背景）
     返回值：没有
     参数：
-        INFO
-        类型：display_info*
+        node
+        类型：m_ui_node_t*
         作用：传递要打印的图片信息
 */
-void u8g2_print_BMP( display_info* INFO ){
+void u8g2_print_image( m_ui_node_t* node ){
 
     #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("u8g2_print_BMP()");
+    Serial.println("u8g2_print_image()");
     #endif
 
     u8g2.setDrawColor(1);
     
-    m_image_t* IMAGE = INFO->data.img;
+    m_image_t* IMAGE = node->data.image;
     uint8_t bmp_data = 0;
     uint8_t x_cursor = 0;
     uint8_t y_cursor = 0;
@@ -306,14 +277,14 @@ void u8g2_print_BMP( display_info* INFO ){
     uint8_t bit = 0 ;
     const uint8_t width =  IMAGE->width;
     const uint8_t height = IMAGE->height;
-    const uint8_t x = INFO->x;
-    const uint8_t y = INFO->y;
+    const uint8_t x = node->x;
+    const uint8_t y = node->y;
     const uint8_t bytes_per_line = (width + 7) / 8;//每行包含字节数
 
     //涂黑背景
     if( IMAGE->if_black_background ){
         u8g2.setDrawColor(0);
-        u8g2.drawBox(INFO->x, INFO->y, 
+        u8g2.drawBox(x, y, 
             width,
             height
         );
@@ -340,42 +311,43 @@ void u8g2_print_BMP( display_info* INFO ){
     函数功能：打印设置界面
     返回值：没有
     参数：
-        SIT
-        类型：setting*
+        node
+        类型：m_ui_node_t*
         作用：传递要打印的设置参数
 *///
-void u8g2_print_setting( m_setting_t* SET ){
+void u8g2_print_setting( m_ui_node_t* node ){
 
     #if( IF_DEBUG_3 ==true )//debug
     Serial.println("u8g2_print_setting()");
     #endif
 
+    m_setting_t* set = node->data.setting;
     char str[24];
     double_t value = 0;
 
     //打印
-    u8g2_print_title( SET->name );//打印标题
-    switch( SET->MODE ){//设置打印内容
+    u8g2_print_title( set->name );//打印标题
+    switch( set->MODE ){//设置打印内容
         case SETTING_MODE_DOUBLE:
-            value = *(double_t*)SET->object;
-            sprintf( str , "value -> %.6g", *(double_t*)SET->object );
+            value = *(double_t*)set->object;
+            sprintf( str , "value -> %.6g", *(double_t*)set->object );
         break;
         case SETTING_MODE_CHAR:
-            value = *(int8_t*)SET->object;
-            sprintf( str , "char -> %c", *(int8_t*)SET->object );
+            value = *(int8_t*)set->object;
+            sprintf( str , "char -> %c", *(int8_t*)set->object );
             char char_value_str[7];//显示char值
-            sprintf( char_value_str , "0x%x" , *(uint8_t*)SET->object );
+            sprintf( char_value_str , "0x%x" , *(uint8_t*)set->object );
             u8g2.drawUTF8( 88 , 24 , char_value_str );//打印内容
         break;
         case SETTING_MODE_INT:
-            value = *(int64_t*)SET->object;
-            sprintf( str , "value -> %d", *(int64_t*)SET->object );
+            value = *(int64_t*)set->object;
+            sprintf( str , "value -> %d", *(int64_t*)set->object );
         break;
     }
     u8g2.drawUTF8( 8 , 24 , str );//打印内容
     u8g2.drawUTF8( 8 , 38 , "min" );//打印UI
     u8g2.drawUTF8( 100 , 38 , "max" );
-    u8g2.drawBox( 28 , 42 , (value - SET->min)/(SET->max - SET->min) *66 , 3 );
+    u8g2.drawBox( 28 , 42 , (value - set->min)/(set->max - set->min) *66 , 3 );
     
     u8g2.drawUTF8( 4 , 51 , "2/4.确认并退出" );
 }
