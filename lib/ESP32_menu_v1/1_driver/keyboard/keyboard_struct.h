@@ -26,7 +26,7 @@ typedef enum{
 
 //按键信息结构体
 typedef struct{
-    KEY_VALUE key_value;
+    uint8_t key_value;
     uint16_t press_time;
 }m_keyboard_t;//menu_keyboard
 

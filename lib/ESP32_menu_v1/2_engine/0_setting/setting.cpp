@@ -30,6 +30,10 @@
 *///
 bool set_setting_num( double_t* num , double_t min , double_t max , m_setting_mode mode ){
 
+    #if(IF_DEBUG_2 == true)//debug
+    Serial.println("set_setting_num()");
+    #endif
+
     bool return_value = false;
     double_t minus = max - min;//最大值-最小值的差
     double_t adjust_num = 0;//决定调整速度

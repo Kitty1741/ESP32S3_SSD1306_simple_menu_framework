@@ -29,18 +29,12 @@ m_keyboard_t keyboard_status;
 //简单的键盘扫描函数
 //功能：在中断中扫描键盘然后赋值给MainEventManager.keyboard_status
 void default_scan_function(){
-    KEY_VALUE key_value;
-    uint16_t press_time;
 
     //扫描和计时
-    key_value = (KEY_VALUE)user_scan_once();
-    key_value == KEY_NULL ?
-    press_time = 0 :
-    press_time += 20 ;
-
-    //直接把数据打入公共结构
-    keyboard_status.key_value = key_value;
-    keyboard_status.press_time = press_time;
+    keyboard_status.key_value = user_scan_once();
+    keyboard_status.key_value == KEY_NULL ?
+    keyboard_status.press_time = 0 :
+    keyboard_status.press_time += 20 ;
 
     return;
 }
@@ -56,10 +50,10 @@ void default_init_function(){
 //扫描键盘返回枚举键值
 //默认键盘在10 11 12 13引脚上
 uint8_t default_scan_once_function(){
-    if     ( digitalRead( UP_NUM_IO   ) == 0 ){return (int)KEY_UP_NUM;}
-    else if( digitalRead( OK_NUM_IO   ) == 0 ){return (int)KEY_OK_NUM;}
-    else if( digitalRead( DOWN_NUM_IO ) == 0 ){return (int)KEY_DOWN_NUM;}
-    else if( digitalRead( BACK_NUM_IO ) == 0 ){return (int)KEY_BACK_NUM;}
+    if     ( digitalRead( UP_NUM_IO   ) == 0 ){return KEY_UP_NUM;}
+    else if( digitalRead( OK_NUM_IO   ) == 0 ){return KEY_OK_NUM;}
+    else if( digitalRead( DOWN_NUM_IO ) == 0 ){return KEY_DOWN_NUM;}
+    else if( digitalRead( BACK_NUM_IO ) == 0 ){return KEY_BACK_NUM;}
     else{
         return KEY_NULL;
     }

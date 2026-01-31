@@ -17,9 +17,9 @@ CREATE_IMAGE(cat_13_0,13,{
 CREATE_IMAGE(love_you,8,{
 0xb6, 0xf7, 0xff, 0x7f, 0x3e, 0x1c, 0x88, 
 })
-m_ui_node_t cat_13_1_image_node = to_node(&cat_13_1_image,64,20);
-m_ui_node_t cat_13_0_image_node = to_node(&cat_13_0_image,64,20);
-m_ui_node_t love_you_image_node = to_node(&love_you_image,81,23);
+CREATE_NODE(cat_13_1_image);
+CREATE_NODE(cat_13_0_image);
+CREATE_NODE(love_you_image);
 
 
 bool momo_cat( void* no_param ){

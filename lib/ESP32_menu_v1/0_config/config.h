@@ -3,6 +3,7 @@
 
 #include "0_config/macro/get_time/get_time.h"
 #include "0_config/macro/lengthof()/lengthof().h"
+#include "0_config/macro/debug/debug.h"
 
 //全局设置
 
@@ -10,16 +11,17 @@
 #define LONG_PRESS_THRESHOLD 400
 
 //是否开启调试模式(串口发送调试信息)(1/0)
-#define IF_DEBUG 0
+#define IF_DEBUG 1
 #if( IF_DEBUG == 1 )
 
-#define IF_DEBUG_0 0//允许调试不同层
-#define IF_DEBUG_1 0
+#define IF_DEBUG_0 1//允许调试不同层
+#define IF_DEBUG_1 1
 #define IF_DEBUG_2 1
 #define IF_DEBUG_3 1
 #define IF_DEBUG_4 0
 
 #endif
+#include "0_config/macro/debug/debug.h"
 
 //该层初始化清单
 #define INIT_LIST_0 \

@@ -24,6 +24,7 @@ extern void (* user_init_keyboard)();//初始化键盘的硬件
         意义：由freeRTOS调用的回调函数必须要有个void*参数
 *///
 void ManagerKeyboard( void* no_param ){
+    DEBUG_1("ManagerKeyboard()\n");
     while(1){
         user_scan_keyboard();
         vTaskDelay( pdMS_TO_TICKS(20) );
@@ -53,10 +54,7 @@ void keyboard_init(){
 //这个别改
 void init_keyboard_timer(){
 
-    #if( IF_DEBUG_1 == true )
-    ///*debug*///
-    Serial.print("init_keyboard_timer()\n");
-    #endif
+      DEBUG_1("init_keyboard_timer()\n");
 
     hw_timer_t *timer = NULL;
     switch(use_which_timer){
@@ -93,10 +91,8 @@ void init_keyboard_timer(){
 *///
 uint8_t get_key_value(){
 
-    #if( IF_DEBUG_1 == true )
-    ///*debug*///
-    Serial.print("get_key_value()\n");
-    #endif
+      DEBUG_1("get_key_value() = ")
+      DEBUG_1(keyboard_status.key_value + '\n')
 
     return keyboard_status.key_value;
 }
@@ -112,10 +108,8 @@ uint8_t get_key_value(){
 *///
 uint16_t get_press_time(){
 
-    #if( IF_DEBUG_1 == true )
-    ///*debug*///
-    Serial.print("get_press_time()\n");
-    #endif
+      DEBUG_1("get_press_time() = ")
+      DEBUG_1(keyboard_status.press_time + '\n')
 
     return keyboard_status.press_time;
 }
@@ -130,13 +124,17 @@ uint16_t get_press_time(){
 *///
 uint8_t get_first_key(){
 
+    DEBUG_1("get_first_key() = ")
+    
     static uint8_t last_key;
 
     if( last_key == get_key_value() ){
+          DEBUG_1(KEY_NULL + '\n')
         return KEY_NULL;
     }
     else{
         last_key = get_key_value();
+          DEBUG_1(last_key + '\n')
         return last_key;
     }
 }
@@ -157,7 +155,7 @@ uint8_t get_last_key(){
 
     key = get_key_value();
     //检测按键是否松开
-    if( key != (int)KEY_NULL ){//如果没有松开
+    if( key != (uint8_t)KEY_NULL ){//如果没有松开
         last_key = key;//记录此时的值
         return 0;
     }else{//如果松开了

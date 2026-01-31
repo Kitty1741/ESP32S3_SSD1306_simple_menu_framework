@@ -7,11 +7,14 @@
 //包含结构声明
 #include "3_display/1_u8g2_print/u8g2_print_struct.h"
 
-void link_node(m_ui_node_t* A,m_ui_node_t* B);
 m_ui_node_t to_node( m_menu_t *MENU );
 m_ui_node_t to_node( m_list_t *LIST );
 m_ui_node_t to_node( m_image_t* IMAGE );
-m_ui_node_t to_node( m_image_t* IMAGE , uint8_t x , uint8_t y);
 m_ui_node_t to_node( m_setting_t *SET);
+
+m_ui_node_t to_node(m_menu_t *MENU,uint8_t x,uint8_t y);
+m_ui_node_t to_node(m_list_t *LIST,uint8_t x,uint8_t y);
+m_ui_node_t to_node(m_image_t* IMAGE,uint8_t x,uint8_t y);
+m_ui_node_t to_node(m_setting_t *SET,uint8_t x,uint8_t y);
 
 #endif
