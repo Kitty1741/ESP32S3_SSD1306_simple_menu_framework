@@ -27,9 +27,7 @@ TaskHandle_t DisplayTask;//显示任务
 *///
 bool display_set( m_ui_node_t* node ){
 
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("set_display_info()");
-    #endif
+    __DEBUG_3("set_display_info()\n")
 
     //脏检测待实现
     if( xSemaphoreTake( DisplayMutex, 20 ) == pdTRUE ){//如果没上锁，上锁
@@ -47,9 +45,7 @@ bool display_set( m_ui_node_t* node ){
 *///
 void display_refresh(){
 
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("display_refresh()");
-    #endif
+    __DEBUG_3("display_refresh()\n")
 
     if( xSemaphoreTake( DisplayMutex, 20 ) == pdTRUE ){//如果没上锁
         xSemaphoreGive( DisplayMutex );//开锁
@@ -68,9 +64,7 @@ void display_refresh(){
 *///
 void DisplayManager( void* no_param ){
 
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("DisplayManager()");
-    #endif
+    __DEBUG_3("DisplayManager()\n")
 
     while(1){
         xSemaphoreTake( DisplayUpdateSem , portMAX_DELAY );//检测到刷新信号，从这里开始执行
@@ -83,9 +77,7 @@ void DisplayManager( void* no_param ){
 
 void DisplayManager_init(){
 
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("DisplayManager_init()");
-    #endif
+    __DEBUG_3("DisplayManager_init()\n")
 
     //初始化互斥锁
     DisplayMutex = xSemaphoreCreateMutex();//创建互斥锁

@@ -21,9 +21,7 @@
 *///
 bool set_list_cursor( m_list_t *LIST ){
 
-    #if( IF_DEBUG_2 == true )//debug
-    Serial.println("set_list_cursor()");
-    #endif
+    __DEBUG_2("set_list_cursor()\n")
 
     uint8_t list_key;
     list_key = get_first_key();//检测按下键值

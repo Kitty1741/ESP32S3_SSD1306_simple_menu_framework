@@ -24,7 +24,7 @@ extern void (* user_init_keyboard)();//初始化键盘的硬件
         意义：由freeRTOS调用的回调函数必须要有个void*参数
 *///
 void ManagerKeyboard( void* no_param ){
-    DEBUG_1("ManagerKeyboard()\n");
+    __DEBUG_1("ManagerKeyboard()\n");
     while(1){
         user_scan_keyboard();
         vTaskDelay( pdMS_TO_TICKS(20) );
@@ -54,10 +54,10 @@ void keyboard_init(){
 //这个别改
 void init_keyboard_timer(){
 
-      DEBUG_1("init_keyboard_timer()\n");
+    __DEBUG_1("init_keyboard_timer()\n");
 
     hw_timer_t *timer = NULL;
-    switch(use_which_timer){
+    switch(USE_TIMER){
         case 5:break;
         case 4:{//选择软件定时器
             #if ( use_which_timer == 4 )
@@ -72,11 +72,11 @@ void init_keyboard_timer(){
             #endif
         }break;
         default:{//选择硬件定时器
-            timer = timerBegin( use_which_timer , 80 , true );//初始化对应硬件定时器
+            timer = timerBegin( USE_TIMER , 80 , true );//初始化对应硬件定时器
             timerAttachInterrupt( timer , user_scan_keyboard, false );//用于将中断处理函数与特定的定时器关联起来
-            timerAlarmWrite( timer, 40000 , true );//用于设置定时器的计数值
+            timerAlarmWrite( timer, 20000 , true );//用于设置定时器的计数值
             timerAlarmEnable(timer);  // 启动定时器！
-        }break;            /*对于40000↑说明：0.02s*(160MHZ/分频系数)*/
+        }break;            /*对于20000↑说明：0.02s*(80MHZ/分频系数)*/
     }
 }
 
@@ -91,8 +91,8 @@ void init_keyboard_timer(){
 *///
 uint8_t get_key_value(){
 
-      DEBUG_1("get_key_value() = ")
-      DEBUG_1(keyboard_status.key_value + '\n')
+    __DEBUG_1("get_key_value() = ")
+    __DEBUG_1(keyboard_status.key_value ) __DEBUG_1('\n')
 
     return keyboard_status.key_value;
 }
@@ -108,8 +108,8 @@ uint8_t get_key_value(){
 *///
 uint16_t get_press_time(){
 
-      DEBUG_1("get_press_time() = ")
-      DEBUG_1(keyboard_status.press_time + '\n')
+    __DEBUG_1("get_press_time() = ")
+    __DEBUG_1(keyboard_status.press_time ) __DEBUG_1('\n')
 
     return keyboard_status.press_time;
 }
@@ -124,17 +124,17 @@ uint16_t get_press_time(){
 *///
 uint8_t get_first_key(){
 
-    DEBUG_1("get_first_key() = ")
+    __DEBUG_1("get_first_key() = ")
     
     static uint8_t last_key;
 
     if( last_key == get_key_value() ){
-          DEBUG_1(KEY_NULL + '\n')
+        __DEBUG_1(KEY_NULL) __DEBUG_1('\n')
         return KEY_NULL;
     }
     else{
         last_key = get_key_value();
-          DEBUG_1(last_key + '\n')
+        __DEBUG_1(last_key) __DEBUG_1('\n')
         return last_key;
     }
 }
@@ -150,6 +150,8 @@ uint8_t get_first_key(){
 *///
 uint8_t get_last_key(){
 
+    __DEBUG_1("get_last_key() = ")
+
     static uint8_t key;
     static uint8_t last_key;
 
@@ -157,10 +159,12 @@ uint8_t get_last_key(){
     //检测按键是否松开
     if( key != (uint8_t)KEY_NULL ){//如果没有松开
         last_key = key;//记录此时的值
-        return 0;
+        __DEBUG_1(KEY_NULL + '\n')
+        return KEY_NULL;
     }else{//如果松开了
         key = last_key;//初始化
         last_key = 0;
+        __DEBUG_1(key + '\n')
         return key;
     }
 }

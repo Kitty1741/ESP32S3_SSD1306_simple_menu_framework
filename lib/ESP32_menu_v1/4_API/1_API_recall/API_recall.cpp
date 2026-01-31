@@ -18,6 +18,8 @@
 *///
 bool run_node( void* param ){
 
+    __DEBUG_4("run_node()\n")
+
     m_ui_node_t* node = (m_ui_node_t*)param;
     bool return_value = false;
 

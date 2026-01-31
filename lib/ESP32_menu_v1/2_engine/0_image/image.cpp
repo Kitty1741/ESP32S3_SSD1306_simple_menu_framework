@@ -44,6 +44,9 @@ void set_black_image_background( m_image_t* IMAGE , bool if_black ){
         作用：设转动几次
 *///
 void rotate_image(m_image_t* IMAGE, uint8_t n) {
+
+    __DEBUG_2("rotate_image()")
+
     if (IMAGE == NULL || IMAGE->image_data == NULL) return;
     
     // 计算实际旋转次数（模4运算）

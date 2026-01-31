@@ -24,6 +24,6 @@
 //   硬件定时器 软件 不定时，你来操作
 //
 //默认用硬件定时器(3)
-#define use_which_timer 3
+#define USE_TIMER 3
 
 #endif

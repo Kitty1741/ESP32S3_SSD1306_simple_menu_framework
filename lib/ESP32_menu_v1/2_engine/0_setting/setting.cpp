@@ -30,9 +30,7 @@
 *///
 bool set_setting_num( double_t* num , double_t min , double_t max , m_setting_mode mode ){
 
-    #if(IF_DEBUG_2 == true)//debug
-    Serial.println("set_setting_num()");
-    #endif
+    __DEBUG_2("set_setting_num()\n")
 
     bool return_value = false;
     double_t minus = max - min;//最大值-最小值的差
@@ -87,6 +85,8 @@ bool set_setting_num( double_t* num , double_t min , double_t max , m_setting_mo
 *///
 bool set_double_setting( m_setting_t* SET ){
 
+    __DEBUG_2("set_double_setting()\n")
+
     //设置值
     bool return_value = set_setting_num( 
         (double_t*)SET->object,
@@ -113,6 +113,8 @@ bool set_double_setting( m_setting_t* SET ){
         作用：告诉函数调整哪个设置
 *///
 bool set_int_setting( m_setting_t* SET ){
+
+    __DEBUG_2("set_int_setting()\n")
     
     //初始化
     static double_t value;
@@ -146,6 +148,9 @@ bool set_int_setting( m_setting_t* SET ){
         作用：告诉函数调整哪个设置
 *///
 bool set_char_setting( m_setting_t* SET ){
+
+    __DEBUG_2("set_char_setting()\n")
+
     //初始化
     static double_t value;
     if( (char)value != *(char*)SET->object )

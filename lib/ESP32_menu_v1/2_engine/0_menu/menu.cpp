@@ -50,9 +50,7 @@ void task_loop( bool (*function)(void*) , void* param ){
 *///
 bool set_menu_cursor( m_menu_t* MENU ){
 
-    #if( IF_DEBUG_2 == true )//debug
-    Serial.println("set_menu_cursor()");
-    #endif
+    __DEBUG_2("set_menu_cursor()\n")
 
     uint8_t menu_key;
     menu_key = get_first_key();//检测按下键值

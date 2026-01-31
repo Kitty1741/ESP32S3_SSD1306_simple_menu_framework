@@ -27,9 +27,7 @@ U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE , u8
 *///
 void u8g2_print_init(){
 
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("u8g2_print_init()");
-    #endif
+    __DEBUG_3("u8g2_print_init()\n")
 
     static bool if_first_setup = false;
 
@@ -82,9 +80,7 @@ inline void u8g2_print_title( const char* title ){
 *///
 inline void u8g2_print_ui_node_once(m_ui_node_t* node){
 
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("u8g2_print_ui_node_once()");
-    #endif
+    __DEBUG_3("u8g2_print_ui_node_once()\n");
 
     switch( node->type ){
         case UI_TYPE_NONE :break;// 不显示
@@ -117,9 +113,7 @@ inline void u8g2_print_ui_node_once(m_ui_node_t* node){
 *///
 void u8g2_print_ui_node( m_ui_node_t* node ){
 
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("u8g2_print_ui_node()");
-    #endif
+    __DEBUG_3("u8g2_print_ui_node()\n")
 
     u8g2.clearBuffer();    // 清Buffer缓冲区的数
 
@@ -143,9 +137,7 @@ void u8g2_print_ui_node( m_ui_node_t* node ){
 *///
 void u8g2_print_menu( m_ui_node_t* node ){
 
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("u8g2_print_menu()");
-    #endif
+    __DEBUG_3("u8g2_print_menu()\n")
 
     uint8_t view_line = 0;//显示的第一行
     uint8_t width = 0;//打印字符的宽度(用来设置光标)
@@ -189,9 +181,7 @@ void u8g2_print_menu( m_ui_node_t* node ){
 *///
 void u8g2_print_list( m_ui_node_t* node ){
 
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("u8g2_print_list()");
-    #endif
+    __DEBUG_3("u8g2_print_list()\n")
 
     m_list_t* list = node->data.list;
     uint16_t list_view_line = list->cursor;//列表显示在屏幕上的第一行对应光标行数
@@ -219,9 +209,7 @@ void u8g2_print_list( m_ui_node_t* node ){
 */
 void u8g2_print_image( m_ui_node_t* node ){
 
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("u8g2_print_image()");
-    #endif
+    __DEBUG_3("u8g2_print_image()\n");
 
     u8g2.setDrawColor(1);
     
@@ -274,9 +262,7 @@ void u8g2_print_image( m_ui_node_t* node ){
 *///
 void u8g2_print_setting( m_ui_node_t* node ){
 
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("u8g2_print_setting()");
-    #endif
+    __DEBUG_3("u8g2_print_setting()\n")
 
     if( node->data.setting->object == NULL )return;
 
@@ -319,9 +305,7 @@ void u8g2_print_setting( m_ui_node_t* node ){
 *///
 void u8g2_print_LOADING(){
 
-    #if( IF_DEBUG_3 ==true )//debug
-    Serial.println("u8g2_print_LOADING()");
-    #endif
+    __DEBUG_3("u8g2_print_LOADING()\n");
 
     //初始化
     static uint32_t frame = 0;
