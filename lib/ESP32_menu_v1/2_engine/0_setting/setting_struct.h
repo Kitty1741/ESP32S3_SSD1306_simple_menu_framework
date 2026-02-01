@@ -7,7 +7,7 @@
 //设置变量类型枚举
 typedef enum{
 
-    SETTING_MODE_CHAR,
+    SETTING_MODE_UCHAR,
     SETTING_MODE_INT,
     SETTING_MODE_DOUBLE,
 
@@ -17,7 +17,7 @@ typedef enum{
 typedef struct{
 
     const char* name;        //界面标题
-    const m_setting_mode MODE; //设置变量的类型
+    const m_setting_mode mode; //设置变量的类型
     void* object;            //设置的对象指针
     double_t min;             //最小值
     double_t max;             //最大值

@@ -47,7 +47,7 @@ bool set_setting_num( double_t* num , double_t min , double_t max , m_setting_mo
         adjust_num = ( adjust_num/20000 +0.01 ) * minus;//调整速度随时间线性增加
     }else switch( mode ){//单击
         case SETTING_MODE_INT:adjust_num = 1;break;
-        case SETTING_MODE_CHAR:adjust_num = 1;break;
+        case SETTING_MODE_UCHAR:adjust_num = 1;break;
         case SETTING_MODE_DOUBLE:adjust_num = minus * 0.003;break;
     }
 
@@ -92,7 +92,7 @@ bool set_double_setting( m_setting_t* SET ){
         (double_t*)SET->object,
         SET->min,
         SET->max,
-        SET->MODE
+        SET->mode
     );
 
     //返回
@@ -119,14 +119,14 @@ bool set_int_setting( m_setting_t* SET ){
     //初始化
     static double_t value;
     if( (int64_t)value != *(int64_t*)SET->object )
-    value = *(int64_t*)SET->object;
+        value = *(int64_t*)SET->object;
 
     //设置值
     bool return_value = set_setting_num( 
         &value,
         SET->min,
         SET->max,
-        SET->MODE
+        SET->mode
     );*(int64_t*)SET->object = value;
 
     //返回
@@ -137,7 +137,7 @@ bool set_int_setting( m_setting_t* SET ){
 
 
 /*
-    函数名字：set_char_setting
+    函数名字：set_uchar_setting
     函数功能：根据接口里的键值，设置char类型值
     返回值：
         类型：bool
@@ -147,24 +147,25 @@ bool set_int_setting( m_setting_t* SET ){
         类型：m_setting_t*
         作用：告诉函数调整哪个设置
 *///
-bool set_char_setting( m_setting_t* SET ){
+bool set_uchar_setting( m_setting_t* SET ){
 
-    __DEBUG_2("set_char_setting()\n")
+    __DEBUG_2("set_uchar_setting()\n")
 
     //初始化
     static double_t value;
-    if( (char)value != *(char*)SET->object )
-    value = *(char*)SET->object;
+    if( (uint8_t)value != *(uint8_t*)SET->object )
+        value = *(uint8_t*)SET->object;
 
     //设置值
-    SET->min = -0x80;
-    SET->max = 0x7f;
+    SET->min = 0x00;
+    SET->max = 0xff;
     bool return_value = set_setting_num( 
         &value,
         SET->min,
         SET->max,
-        SET->MODE
-    );*(char*)SET->object = (char)value;
+        SET->mode
+    );
+    *(uint8_t*)SET->object = (uint8_t)value;
 
     //返回
     while( return_value && get_key_value() )

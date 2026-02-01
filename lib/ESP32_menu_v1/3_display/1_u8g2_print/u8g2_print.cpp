@@ -272,14 +272,14 @@ void u8g2_print_setting( m_ui_node_t* node ){
 
     //打印
     u8g2_print_title( set->name );//打印标题
-    switch( set->MODE ){//设置打印内容
+    switch( set->mode ){//设置打印内容
         case SETTING_MODE_DOUBLE:
             value = *(double_t*)set->object;
             sprintf( str , "value -> %.6g", *(double_t*)set->object );
         break;
-        case SETTING_MODE_CHAR:
-            value = *(int8_t*)set->object;
-            sprintf( str , "char -> %c", *(int8_t*)set->object );
+        case SETTING_MODE_UCHAR:
+            value = *(uint8_t*)set->object;
+            sprintf( str , "char -> %c", *(uint8_t*)set->object );
             char char_value_str[7];//显示char值
             sprintf( char_value_str , "0x%x" , *(uint8_t*)set->object );
             u8g2.drawUTF8( 88 , 24 , char_value_str );//打印内容

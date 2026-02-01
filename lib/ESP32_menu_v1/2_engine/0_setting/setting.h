@@ -6,7 +6,7 @@
 #include "setting_macro.h"
 
 bool set_int_setting( m_setting_t* );
-bool set_char_setting( m_setting_t* );
+bool set_uchar_setting( m_setting_t* );
 bool set_double_setting( m_setting_t* );
 
 #endif

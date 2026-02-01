@@ -2,9 +2,14 @@
 
 #include "menu_API.h"
 
-
+//初始化图像
 CREATE_IMAGE(cat_13_1,13,{
-0x1f, 0xc1, 0x20, 0x32, 0x40, 0x0a, 0x40, 0x05, 0xbe, 0x1c, 0x81, 0x2c, 0x9c, 0xcc, 0x80, 0x0c, 0x8f, 0x8c, 0x88, 0x8c, 0x87, 0x0f
+0x1f, 0xc1, 0x20, 0x32, 
+0x40, 0x0a, 0x40, 0x05, 
+0xbe, 0x1c, 0x81, 0x2c, 
+0x9c, 0xcc, 0x80, 0x0c, 
+0x8f, 0x8c, 0x88, 0x8c, 
+0x87, 0x0f
 })
 CREATE_IMAGE(cat_13_0,13,{
 0x10, 0x41, 0x28, 0xa2, 
@@ -17,20 +22,28 @@ CREATE_IMAGE(cat_13_0,13,{
 CREATE_IMAGE(love_you,8,{
 0xb6, 0xf7, 0xff, 0x7f, 0x3e, 0x1c, 0x88, 
 })
-CREATE_NODE(cat_13_1_image);
-CREATE_NODE(cat_13_0_image);
-CREATE_NODE(love_you_image);
 
+//图像->显示节点
+CREATE_NODE(cat_13_1_image,0,1);
+CREATE_NODE(cat_13_0_image,0,1);
+CREATE_NODE(love_you_image,16,3);
+
+//初始化
+void momo_cat_init(){
+    cat_13_1_image_node.next = &love_you_image_node;
+}
+INIT(momo_cat)
 
 bool momo_cat( void* no_param ){
 
-    cat_13_1_image_node.next = &love_you_image_node;
-    if ( get_key_value() == KEY_BACK_NUM )
-    return true;
+    if ( get_key_value() == KEY_BACK_NUM ){
+        return true;
+    }
+
     else if( get_key_value() == KEY_OK_NUM )
-    display_set(&cat_13_1_image_node);
+        display_set(&cat_13_1_image_node);
     else display_set(&cat_13_0_image_node);
-    display_refresh();
+        display_refresh();
 
     return false;
 }

@@ -6,7 +6,7 @@ extern m_ui_node_t main_menu_node;
 void setup() {
 
     //menu_API
-    menu_API_init();
+    menu_init();
 }
 void loop(){
     //主菜单

@@ -37,9 +37,9 @@ bool set_cursor( m_menu_t* MENU )
 bool set_cursor( m_list_t* LIST )
 { return set_list_cursor( LIST ); }
 bool set_cursor( m_setting_t* SET ){
-    switch( SET->MODE ){
+    switch( SET->mode ){
         case SETTING_MODE_DOUBLE:return set_double_setting( SET );
         case SETTING_MODE_INT:return set_int_setting( SET );
-        case SETTING_MODE_CHAR:return set_char_setting( SET );
+        case SETTING_MODE_UCHAR:return set_uchar_setting( SET );
     }return true;
 }

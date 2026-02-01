@@ -21,5 +21,5 @@ CREATE_MENU(main,{
     {"多行测试_78",do_nothing},
     {"多行测试_91",do_nothing},
 })
-//对应显示包
+//对应显示节点
 m_ui_node_t main_menu_node = to_node( &main_menu );

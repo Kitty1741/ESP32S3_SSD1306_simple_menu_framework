@@ -8,9 +8,6 @@
 #include "3_display/2_set_node/set_node.h"
 #include "3_display/3_to_node/to_node.h"
 
-#define GET_FIRST_ARG( _A0_ , ... ) _A0_
-#define GET_ANOTHER_ARG( _B0_ , ... ) __VA_ARGS__
-
 #define CREATE_NODE( DATA , ... )                       \
 m_ui_node_t DATA##_node = to_node(                      \
     &DATA                                               \

@@ -22,51 +22,62 @@ CREATE_IMAGE( kulipa , 48 , {
     0x00,0xff,0x00,0x00,0xff,0x00,  0x00,0xff,0x00,0x00,0xff,0x00,  0x00,0xff,0x00,0x00,0xff,0x00,  0x00,0xff,0x00,0x00,0xff,0x00,
     0x00,0xff,0x00,0x00,0xff,0x00,  0x00,0xff,0x00,0x00,0xff,0x00,  0x00,0xff,0x00,0x00,0xff,0x00,  0x00,0xff,0x00,0x00,0xff,0x00,
 })
-//CREATE_NODE(kulipa_image)
-m_ui_node_t kulipa_image_node = to_node( &kulipa_image , 40 , 8 );
+CREATE_NODE(kulipa_image,40,8)
+
+
+
+
+
+
+
+
 
 //SET
 //int
 int64_t testint = 0;                
-m_setting_t TEST_SET_INT = {            
-    .name = "测试int",              
-    .MODE = SETTING_MODE_INT,       
-    .object = &testint,             
-    .min = 0,                 
-    .max = 255,                 
-};                                  
-m_ui_node_t TEST_SET_INT_node = to_node( &TEST_SET_INT );
-//char
-char testchar = '2';
-m_setting_t TEST_SET_CHAR = {
+CREATE_SETTING(
+    test_int, 
+    SETTING_MODE_INT ,
+    &testint,
+    0,
+    255
+)
+CREATE_NODE(test_int_setting)
 
-    .name = "测试char",
-    .MODE = SETTING_MODE_CHAR,
-    .object = &testchar,
-};
-m_ui_node_t TEST_SET_CHAR_node = to_node( &TEST_SET_CHAR );
+//char
+uint8_t testuchar = '2';
+CREATE_SETTING(
+    test_uchar, 
+    SETTING_MODE_UCHAR ,
+    &testuchar
+)
+CREATE_NODE(test_uchar_setting)
+
 //double
 double testdouble = 0;
-m_setting_t TEST_SET_DOUBLE = {
+CREATE_SETTING(
+    test_double, 
+    SETTING_MODE_DOUBLE ,
+    &testdouble,
+    0,
+    100*PI
+)
+CREATE_NODE(test_double_setting)
 
-    .name = "测试double",
-    .MODE = SETTING_MODE_DOUBLE,
-    .object = &testdouble,
-    .min = -PI,
-    .max = 1*PI,
-    
-};
-m_ui_node_t TEST_SET_DOUBLE_node = to_node( &TEST_SET_DOUBLE );
+
+
+
+
+
 
 
 //测试菜单选项列表
 CREATE_MENU(test_engine,{
-    {"设置char"  ,run_node  ,&TEST_SET_CHAR_node   },
-    {"设置int"   ,run_node  ,&TEST_SET_INT_node    },
-    {"设置double",run_node  ,&TEST_SET_DOUBLE_node },
+    {"设置uchar" ,run_node  ,&test_uchar_setting_node },
+    {"设置int"   ,run_node  ,&test_int_setting_node },
+    {"设置double",run_node  ,&test_double_setting_node },
 })
-
-m_ui_node_t test_engine_menu_node = to_node( &test_engine_menu );
+CREATE_NODE(test_engine_menu)
 
 
 //LOADING
@@ -88,14 +99,14 @@ CREATE_LIST(test , {
 })
 m_ui_node_t test_list_node = to_node( &test_list );
 
-extern char str[12];
+
 //菜单选项列表
 CREATE_MENU(test ,{
-    {"设置测试",run_node,&test_engine_menu_node},
-    {"自定义函数测试",momo_cat,NULL},
-    {"测试loading",run_node,&loading_node},
-    {"测试list",run_node,&test_list_node},
-    {"图片测试",run_node,&kulipa_image_node},
+    {"设置测试"         ,run_node   ,&test_engine_menu_node},
+    {"自定义函数测试"   ,momo_cat,  NULL},
+    {"测试loading"      ,run_node,  &loading_node},
+    {"测试list"         ,run_node,  &test_list_node},
+    {"图片测试"         ,run_node,  &kulipa_image_node},
 })
 //对应显示信息
-m_ui_node_t test_menu_node = to_node( &test_menu );
+CREATE_NODE(test_menu)

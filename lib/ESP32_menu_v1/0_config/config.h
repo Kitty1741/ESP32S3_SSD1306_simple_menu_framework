@@ -10,7 +10,7 @@
 #define LONG_PRESS_THRESHOLD 400
 
 //是否开启调试模式(串口发送调试信息)(1/0)
-#define IF_DEBUG 1
+#define IF_DEBUG 0
 #if( IF_DEBUG == 1 )
 
 #define IF_DEBUG_0 1//允许调试不同层

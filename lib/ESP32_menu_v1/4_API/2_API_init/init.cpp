@@ -21,7 +21,7 @@ void system_init() {
 }
 
 //执行所有初始化函数的函数
-void menu_API_init(){
+void menu_init(){
 
     //debug
     #if( IF_DEBUG == true )

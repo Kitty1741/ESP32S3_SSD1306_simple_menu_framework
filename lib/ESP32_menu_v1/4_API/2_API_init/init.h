@@ -52,6 +52,6 @@ extern init_node* init_list_head;
 void system_init();
 
 // 模块总初始化函数
-void menu_API_init();
+void menu_init();
 
 #endif
