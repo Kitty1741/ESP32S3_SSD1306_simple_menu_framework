@@ -16,17 +16,19 @@ m_ui_node_t DATA##_node = to_node(                      \
 
 //eg.
 /*
+
 CREATE_MENU(test,{
     {"test",do_nothing},
 })
-CREATE_NODE(test_menu)
-这样就创建了个菜单node
-也可以
+CREATE_NODE(test_menu)//这样就创建了个菜单node
+
+
+//也可以
 CREATE_IMAGE(test,8,{
     {0xff,0xff,0xff,0xff}
 })
-CREATE_NODE(test_image,8,8)
-后面两个数字是坐标
+CREATE_NODE(test_image,8,8)//后面两个数字是坐标
+
 */
 
 #endif

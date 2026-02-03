@@ -1,6 +1,6 @@
 //engine_struct.h
-#ifndef __ENGINE_STRUCT__
-#define __ENGINE_STRUCT__
+#ifndef __ENGINE_STRUCT_H__
+#define __ENGINE_STRUCT_H__
 
 #include "2_engine/0_image/image_struct.h"
 #include "2_engine/0_list/list_struct.h"

@@ -23,15 +23,10 @@
       作用：告诉函数调用函数的参数填什么
 
 *///
-void task_loop( bool (*function)(void*) , void* param ){
+void task_loop( void (*function)(void*) , void* param ){
 
     if (!function) return;//防炸
-
-    while(1){
-        if( function(param) == true )
-        break;
-        vTaskDelay(0);
-    }
+    function(param);
 }
 
 

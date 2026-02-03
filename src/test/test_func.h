@@ -1,1 +1,1 @@
-bool momo_cat( void* no_param );
+void momo_cat( void* no_param );

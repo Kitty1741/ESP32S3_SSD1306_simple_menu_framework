@@ -1,6 +1,6 @@
 //engine.h
-#ifndef __ENGINE___
-#define __ENGINE___
+#ifndef __ENGINE_H__
+#define __ENGINE_H__
 
 #include "2_engine/0_menu/menu.h"
 #include "2_engine/0_list/list.h"

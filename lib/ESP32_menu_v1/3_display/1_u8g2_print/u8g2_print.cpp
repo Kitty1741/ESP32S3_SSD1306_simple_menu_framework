@@ -4,20 +4,15 @@
 
 #include "2_engine/engine_struct.h"
 #include "2_engine/engine.h"
-#include "3_display/0_image_src/internal_image.h"
+#include "3_display/0_image_src/image_internal.h"
 
-#include "u8g2_print_setting.h"
+#include "u8g2_create.h"
 #include "u8g2_print_struct.h"
 #include "u8g2_print_internal.h"
 #include "u8g2_print.h"
 
+
 //这里只放打印函数
-
-#if (U8G2_MODE == IIC)
-U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE , u8g2_SCL , u8g2_SDA );
-#elif (U8G2_MODE == SPI)
-
-#endif
 
 /*
     函数名字：u8g2_print_init
@@ -209,46 +204,14 @@ void u8g2_print_list( m_ui_node_t* node ){
 */
 void u8g2_print_image( m_ui_node_t* node ){
 
-    __DEBUG_3("u8g2_print_image()\n");
-
-    u8g2.setDrawColor(1);
-    
-    m_image_t* IMAGE = node->data.image;
-    uint8_t bmp_data = 0;
-    uint8_t x_cursor = 0;
-    uint8_t y_cursor = 0;
-    uint8_t draw_x = 0 ;
-    uint8_t draw_y = 0 ;
-    uint8_t bit = 0 ;
-    const uint8_t width =  IMAGE->width;
-    const uint8_t height = IMAGE->height;
-    const uint8_t x = node->x;
-    const uint8_t y = node->y;
-    const uint8_t bytes_per_line = (width + 7) / 8;//每行包含字节数
-
-    //涂黑背景
-    if( IMAGE->if_black_background ){
-        u8g2.setDrawColor(0);
-        u8g2.drawBox(x, y, 
-            width,
-            height
-        );
-    }
-    
-    u8g2.setDrawColor(1);
-
-    for( y_cursor=0;  y_cursor < height      ; y_cursor++ ){
-    for( x_cursor=0;  x_cursor<bytes_per_line; x_cursor++ ){
-    bmp_data = IMAGE->image_data[y_cursor*bytes_per_line +x_cursor];//记录对应数据 
-
-    for(bit=0;bit<8;bit++){//打印记录数据
-        draw_x = x + 8*x_cursor +bit;
-        draw_y = y + y_cursor ;
-        if( draw_x < 128 && draw_y < 64 ){//屏幕边界检查
-        if( 8*x_cursor +bit < width ){//图像边界检查
-        if( bmp_data & ( 0x80 >> bit ) ){
-          u8g2.drawPixel( draw_x , draw_y ); // 在xy位置绘制一个像素.
-    }}}}}}u8g2.setDrawColor(2);
+    u8g2.setBitmapMode(node->data.image->if_black_background);
+    u8g2.drawXBMP(
+        node->x,
+        node->y,
+        node->data.image->width,
+        node->data.image->height,
+        node->data.image->image_data
+    );
 }
 
 /*
@@ -309,7 +272,7 @@ void u8g2_print_LOADING(){
 
     //初始化
     static uint32_t frame = 0;
-    m_image_t* WORD_IMG = &mystery_chinese_word_loading;
+    m_image_t* WORD_IMG = &mystery_chinese_word_image;
     m_ui_node_t WORD;
     
     //设置显示文字  

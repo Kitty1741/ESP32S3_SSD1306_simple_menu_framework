@@ -8,7 +8,7 @@
 typedef struct{
 
     const char* name;          //选项名字
-    bool (*callback)(void*);//这里放回调函数指针和回调函数参数
+    void (*callback)(void*);//这里放回调函数指针和回调函数参数
     void* param;            //task_loop的参数
 
 }m_option_t;

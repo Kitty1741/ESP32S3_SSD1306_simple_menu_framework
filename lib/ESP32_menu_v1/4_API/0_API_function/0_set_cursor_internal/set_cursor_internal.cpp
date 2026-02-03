@@ -1,4 +1,8 @@
-#include "set_cursor.h"
+#include <Arduino.h>
+
+#include "2_engine/engine.h"
+
+#include "set_cursor_internal.h"
 
 
 /*
@@ -32,10 +36,12 @@ bool set_cursor( m_ui_node_t* node ){
     default : break ;
     }return true;
 }
-bool set_cursor( m_menu_t* MENU )
-{ return set_menu_cursor( MENU ); }
-bool set_cursor( m_list_t* LIST )
-{ return set_list_cursor( LIST ); }
+bool set_cursor( m_menu_t* MENU ){ 
+    return set_menu_cursor( MENU ); 
+}
+bool set_cursor( m_list_t* LIST ){ 
+    return set_list_cursor( LIST ); 
+}
 bool set_cursor( m_setting_t* SET ){
     switch( SET->mode ){
         case SETTING_MODE_DOUBLE:return set_double_setting( SET );

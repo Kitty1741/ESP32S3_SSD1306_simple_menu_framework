@@ -116,7 +116,7 @@ uint16_t get_press_time(){
 
 /*
     函数名字：get_first_key
-    函数功能：返回一次按下按键的值，但是当按键和上次一样时返回KEY_NULL
+    函数功能：返回按下按键那一瞬间的值，没按返回KEY_NULL
     返回值：
         类型：uint8_t
         意义：按键的值
@@ -136,35 +136,5 @@ uint8_t get_first_key(){
         last_key = get_key_value();
         __DEBUG_1(last_key) __DEBUG_1('\n')
         return last_key;
-    }
-}
-
-
-/*
-    函数名字：get_last_key
-    函数功能：检测是否松手并返回最近一次松手时按键的值（多线程用不了），然后销毁这个值
-    返回值：
-        类型：uint8_t
-        意义：按键的值
-    参数：没有
-*///
-uint8_t get_last_key(){
-
-    __DEBUG_1("get_last_key() = ")
-
-    static uint8_t key;
-    static uint8_t last_key;
-
-    key = get_key_value();
-    //检测按键是否松开
-    if( key != (uint8_t)KEY_NULL ){//如果没有松开
-        last_key = key;//记录此时的值
-        __DEBUG_1(KEY_NULL + '\n')
-        return KEY_NULL;
-    }else{//如果松开了
-        key = last_key;//初始化
-        last_key = 0;
-        __DEBUG_1(key + '\n')
-        return key;
     }
 }
