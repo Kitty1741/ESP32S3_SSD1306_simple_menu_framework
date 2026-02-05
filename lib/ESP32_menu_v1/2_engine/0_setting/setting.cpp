@@ -157,8 +157,8 @@ bool set_uchar_setting( m_setting_t* SET ){
         value = *(uint8_t*)SET->object;
 
     //设置值
-    SET->min = 0x00;
-    SET->max = 0xff;
+    SET->min < 0x00?SET->min = 0x00:SET->min;
+    SET->min > 0xff?SET->max = 0xff:SET->max;
     bool return_value = set_setting_num( 
         &value,
         SET->min,
@@ -171,4 +171,20 @@ bool set_uchar_setting( m_setting_t* SET ){
     while( return_value && get_key_value() )
     vTaskDelay(50);//当退出时先阻塞线程直到松手，防止多次检测按键
     return return_value;
+}
+
+/*
+    函数名字：set_setting_object
+    函数功能：根据接口里的键值，设置char类型值
+    返回值：没有
+    参数：
+        set
+        类型：m_setting_t*
+        作用：告诉函数调整哪个设置
+        obj
+        类型：void*
+        作用：要替换的参数
+*///
+void set_setting_object(m_setting_t* set,void* obj){
+    set->object = obj;
 }

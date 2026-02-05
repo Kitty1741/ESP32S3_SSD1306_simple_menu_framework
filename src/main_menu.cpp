@@ -3,6 +3,7 @@
 #include "menu_API.h"
 
 #include "test/test.h"
+#include "0_wifi/wifi.h"
 
 //这个文件专门用来定义主菜单
 
@@ -10,7 +11,7 @@
 //主菜单选项列表
 CREATE_MENU(main,{
     {"test",run_node,&test_menu_node},
-    {"中文测试",do_nothing},
+    {"WiFi设置",run_node,&WiFi_menu_node},
     {"回调函数-菜单测试",run_node,NULL},
     {"多行测试_01",do_nothing},
     {"多行测试_AB",do_nothing},

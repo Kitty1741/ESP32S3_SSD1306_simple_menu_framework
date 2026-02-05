@@ -93,3 +93,13 @@ void DisplayManager_init(){
     );
     xSemaphoreGive( DisplayUpdateSem );//初始化后发送刷新信号
 }
+
+//bool:成功返回true
+bool TakeDisplayMutex(){
+    if( xSemaphoreTake( DisplayMutex, 200 ) == pdTRUE )
+    return true;
+    return false;
+}
+void GiveDisplayMutex(){
+    xSemaphoreGive( DisplayMutex );//开锁
+}

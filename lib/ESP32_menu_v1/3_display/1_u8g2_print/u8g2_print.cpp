@@ -140,21 +140,21 @@ void u8g2_print_menu( m_ui_node_t* node ){
 
     //通过光标计算屏幕所在行
     if( menu->length < 4 ){
-      view_line = 0;
+        view_line = 0;
     }else{
-      menu->cursor == 0                 ? view_line = 0 :
-      menu->cursor == menu->length -2   ? view_line = menu->cursor -2 :
-      menu->cursor == menu->length -1   ? view_line = menu->cursor -3 :
-      /*default*/view_line = menu->cursor -1;
+        menu->cursor == 0                 ? view_line = 0 :
+        menu->cursor == menu->length -2   ? view_line = menu->cursor -2 :
+        menu->cursor == menu->length -1   ? view_line = menu->cursor -3 :
+        /*default*/view_line = menu->cursor -1;
     }
 
     //显示到U8G2
     u8g2_print_title( menu->name );
 
     for(int i=0; i<4; i++){
-      if( i < menu->length ){
-        u8g2.drawUTF8(4 ,18+12*i , menu->items[ i + view_line ].name );//打印选项名字
-      }
+        if( i < menu->length ){
+            u8g2.drawUTF8(4 ,18+12*i , menu->items[ i + view_line ].name );//打印选项名字
+        }
     } 
     width = u8g2.getUTF8Width( menu->items[ menu->cursor ].name) +7;//打印光标
     u8g2.drawBox( 0 , ( menu->cursor - view_line )*12 +16 , width , 13 ); 

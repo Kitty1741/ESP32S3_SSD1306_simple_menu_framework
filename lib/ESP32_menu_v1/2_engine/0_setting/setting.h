@@ -8,5 +8,6 @@
 bool set_int_setting( m_setting_t* );
 bool set_uchar_setting( m_setting_t* );
 bool set_double_setting( m_setting_t* );
+void set_setting_object(m_setting_t* set,void* obj);
 
 #endif

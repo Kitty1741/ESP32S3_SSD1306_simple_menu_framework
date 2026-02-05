@@ -31,7 +31,7 @@ while(1){
         case UI_TYPE_SETTING:{
             if( set_cursor( node->data.setting ) )return;
         }break;
-        default:if( get_first_key() == KEY_BACK_NUM )return;
+        default:if( get_last_key() == KEY_BACK_NUM )return;
     }
 
     display_set( node );

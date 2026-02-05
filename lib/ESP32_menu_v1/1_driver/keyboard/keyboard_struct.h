@@ -28,6 +28,8 @@ typedef enum{
 typedef struct{
     uint8_t key_value;
     uint16_t press_time;
+    uint8_t last_key_value;
+    uint16_t last_press_time;
 }m_keyboard_t;//menu_keyboard
 
 #endif

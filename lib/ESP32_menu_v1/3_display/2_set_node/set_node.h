@@ -9,4 +9,6 @@ void node_init(m_ui_node_t* node);
 void node_init( m_ui_node_t* node , uint8_t x , uint8_t y );
 void node_set_xy( m_ui_node_t* node , uint8_t x ,uint8_t y );
 
+extern m_ui_node_t loading;
+
 #endif

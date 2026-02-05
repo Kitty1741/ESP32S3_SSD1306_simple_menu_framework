@@ -8,7 +8,7 @@
 #include "menu_struct.h"
 
 #define CREATE_MENU(NAME, ... )                             \
-static m_option_t NAME##_menu_options[] = __VA_ARGS__;      \
+m_option_t NAME##_menu_options[] = __VA_ARGS__;             \
 m_menu_t NAME##_menu = {                                    \
     .name = #NAME,                                          \
     .cursor = 0,                                            \

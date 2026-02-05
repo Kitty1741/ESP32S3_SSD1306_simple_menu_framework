@@ -48,7 +48,7 @@ bool set_menu_cursor( m_menu_t* MENU ){
     __DEBUG_2("set_menu_cursor()\n")
 
     uint8_t menu_key;
-    menu_key = get_first_key();//检测按下键值
+    menu_key = get_last_key();//检测按下键值
 
     //根据输入的键值确定光标移动/其他操作
     switch( menu_key ){

@@ -8,7 +8,7 @@
 #include "list_struct.h"
 
 #define CREATE_LIST( NAME , ... )                       \
-static const char* NAME##_list_items[] = __VA_ARGS__;   \
+const char* NAME##_list_items[] = __VA_ARGS__;          \
 m_list_t NAME##_list = {                                \
     .name = #NAME,                                      \
     .cursor = 0,                                        \
